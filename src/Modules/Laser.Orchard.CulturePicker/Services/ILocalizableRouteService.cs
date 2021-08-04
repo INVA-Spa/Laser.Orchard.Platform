@@ -12,5 +12,13 @@ namespace Laser.Orchard.CulturePicker.Services {
         /// </summary>
         int Priority { get; }
         bool TryFindLocalizedUrl(LocalizableRouteContext localizableRouteContext);
+     }
+    public interface ILocalizableRouteService2 : IDependency {
+        /// <summary>
+        /// Defines the order (ascendent) of the execution of the implementations. 
+        /// </summary>
+        int Priority { get; }
+        bool TryFindLocalizedUrl(LocalizableRouteContext localizableRouteContext);
+        bool TryFindLocalizedUrl(LocalizableRouteContext localizableRouteContext, string urlToLocalize);
     }
 }

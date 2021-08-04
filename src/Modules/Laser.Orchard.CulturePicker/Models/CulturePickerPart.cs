@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Orchard.ContentManagement;
 
@@ -8,5 +9,6 @@ namespace Laser.Orchard.CulturePicker.Models {
         public bool ShowOnlyPertinentCultures { get; set; }
         public bool ShowLabel { get; set; }
         public ExtendedCultureRecord UserCulture { get; set; }
+        public Hashtable TranslatedUrls { get; set; }
     }
 }
