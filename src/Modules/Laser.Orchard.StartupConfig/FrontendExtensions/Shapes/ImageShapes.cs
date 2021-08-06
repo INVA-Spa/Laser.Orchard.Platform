@@ -87,6 +87,30 @@ namespace Laser.Orchard.StartupConfig.FrontendExtensions.Shapes {
             IDictionary<string, object> htmlAttributes) {
 
             ImageInfo mainImage = ImageInfo.New(MediaPart, ImagePart, Width, Height);
+            ImageInfo mainImage15 = ImageInfo.New(MediaPart, ImagePart, (int)Math.Round(Width / 1.5), (int)Math.Round(Height / 1.5));
+            ImageInfo mainImage2 = ImageInfo.New(MediaPart, ImagePart, Width / 2, Height / 2);
+            ImageInfo mainImage3 = ImageInfo.New(MediaPart, ImagePart, Width / 3, Height / 3);
+            ImageInfo mainImage4 = ImageInfo.New(MediaPart, ImagePart, Width / 4, Height / 4);
+            if (mainImage == null) {
+                // attempt to validate the information without using the ContentItem
+                mainImage = ImageInfo.New(ImagePath, Width, Height);
+            }
+            if (mainImage15 == null) {
+                // attempt to validate the information without using the ContentItem
+                mainImage15 = ImageInfo.New(ImagePath, (int)Math.Round(Width / 1.5), (int)Math.Round(Height / 1.5));
+            }
+            if (mainImage2 == null) {
+                // attempt to validate the information without using the ContentItem
+                mainImage2 = ImageInfo.New(ImagePath, Width/2, Height/2);
+            }
+            if (mainImage3 == null) {
+                // attempt to validate the information without using the ContentItem
+                mainImage3 = ImageInfo.New(ImagePath, Width / 3, Height / 3);
+            }
+            if (mainImage4 == null) {
+                // attempt to validate the information without using the ContentItem
+                mainImage4 = ImageInfo.New(ImagePath, Width/4, Height/4);
+            }
 
             if (mainImage == null) {
                 // attempt to validate the information without using the ContentItem
@@ -133,11 +157,22 @@ namespace Laser.Orchard.StartupConfig.FrontendExtensions.Shapes {
             if (!string.IsNullOrWhiteSpace(alt)) {
                 tagBuilder.MergeAttribute("alt", alt);
             }
+
+           
+
             // Generate stuff needed for the image profiles
             var imagePath = GetProfileUrl(mainImage, Mode, Alignment, PadColor);
+            var imagePath15 = GetProfileUrl(mainImage15, Mode, Alignment, PadColor);
+            var imagePath2 = GetProfileUrl(mainImage2, Mode, Alignment, PadColor);
+            var imagePath3 = GetProfileUrl(mainImage3, Mode, Alignment, PadColor);
+            var imagePath4 = GetProfileUrl(mainImage4, Mode, Alignment, PadColor);
+
+            tagBuilder.MergeAttribute("srcset", imagePath4 + " " + Width / 4 + "w, " + imagePath3 + " " + Width / 3 + "w, " + imagePath2 + " " + Width / 2 + "w, " + imagePath15 + " " + (int)Math.Round(Width/1.5) + "w," + imagePath + " " + Width+"w");
+            //tagBuilder.MergeAttribute("sizes", "(min-width:" + Width + "px) " + Width + "px,(min-width:" + (int)Math.Round(Width / 1.5) + "px) " + (int)Math.Round(Width / 1.5) + "px,(min-width: " + Width / 2 + "px) " + Width / 2 + "px,(min-width: " + Width / 3 + "px) " + Width / 3 + "px,(min-width: " + Width / 4 + "px) " + Width / 4 + "px");
+            tagBuilder.MergeAttribute("sizes", "50vw");
             if (stubImage == null) {
                 // "normal" behaviour, without stub image for lazyload
-                tagBuilder.MergeAttribute("src", imagePath);
+                tagBuilder.MergeAttribute("src", imagePath4);
             } else {
                 // stub settings:
                 StubMode = string.IsNullOrWhiteSpace(StubMode) ? Mode : StubMode;
@@ -146,7 +181,7 @@ namespace Laser.Orchard.StartupConfig.FrontendExtensions.Shapes {
                 // generate tag with stub image for lazyload
                 var imageStub = GetProfileUrl(stubImage, StubMode, StubAlignment, StubPadColor);
                 tagBuilder.MergeAttribute("src", imageStub);
-                tagBuilder.MergeAttribute("data-src", imagePath);
+                tagBuilder.MergeAttribute("data-src", imagePath4);
             }
 
             Output.Write(tagBuilder.ToString(TagRenderMode.Normal));
