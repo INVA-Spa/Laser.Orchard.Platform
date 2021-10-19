@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Laser.Orchard.NwazetIntegration</RootNamespace>
     <AssemblyName>Laser.Orchard.NwazetIntegration</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -51,16 +51,16 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -69,13 +69,10 @@
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -83,49 +80,61 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\ValidateAttributesActivity.cs" />
+    <Compile Include="Activities\ValidateCheckoutActivity.cs" />
+    <Compile Include="ApplicabilityCriteria\CallHasSpecificCookieCouponCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\CallHasSpecificHeaderCouponCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductWithTermCouponApplicabilityCriterion.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductWithTermCouponLineCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\DateCouponApplicabilityCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryForm.cs" />
+    <Compile Include="ApplicabilityCriteria\CookieValueForm.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductDiscountCouponLineCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductDiscountCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\HeaderValueForm.cs" />
     <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\CouponApiController.cs" />
     <Compile Include="Controllers\TerritoriesApiController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
+    <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
     <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
+    <Compile Include="Drivers\EcommerceAnalyticsSettingsPartDriver.cs" />
+    <Compile Include="Drivers\FacebookShopProductPartDriver.cs" />
+    <Compile Include="Drivers\FacebookShopSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
@@ -140,7 +149,14 @@
     <Compile Include="Filters\CheckoutStepsFilter.cs" />
     <Compile Include="Filters\InfoResultPaymentFilter.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
+    <Compile Include="Filters\SelectTermsForm.cs" />
+    <Compile Include="Filters\SelectTermsFormForLines.cs" />
+    <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
+    <Compile Include="Handlers\EcommerceAnalyticsSettingsPartHandler.cs" />
+    <Compile Include="Handlers\FacebookShopProductPartHandler.cs" />
+    <Compile Include="Handlers\FacebookShopProductSynchronizationTaskHandler.cs" />
+    <Compile Include="Handlers\FacebookShopSiteSettingsPartHandler.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
@@ -148,11 +164,17 @@
     <Compile Include="Handlers\TerritoryAddressTypePartHandler.cs" />
     <Compile Include="Handlers\TerritoryAdministrativeTypePartHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Migration\MigrationsFacebookShop.cs" />
     <Compile Include="Models\AddressOrderPart.cs" />
     <Compile Include="Models\AddressOrderPartRecord.cs" />
     <Compile Include="Migration\MigrationsGTM.cs" />
     <Compile Include="Models\AddedMeasuringPurchase.cs" />
+    <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
+    <Compile Include="Models\EcommerceAnalyticsSettingsPart.cs" />
+    <Compile Include="Models\FacebookShopProductPart.cs" />
+    <Compile Include="Models\FacebookShopProductPartRecord.cs" />
+    <Compile Include="Models\FacebookShopSiteSettingsPart.cs" />
     <Compile Include="Models\GTMProductPart.cs" />
     <Compile Include="Models\GTMProductPartRecord.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />
@@ -165,25 +187,47 @@
     <Compile Include="Models\TerritoryAdministrativeTypePart.cs" />
     <Compile Include="Models\TerritoryAdministrativeTypePartRecord.cs" />
     <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
+    <Compile Include="Navigation\FacebookSiteSettingsAdminMenu.cs" />
+    <Compile Include="PartSettings\FacebookShopProductPartEditorEvents.cs" />
+    <Compile Include="PartSettings\FacebookShopProductPartSettings.cs" />
     <Compile Include="PartSettings\GTMProductEditEvent.cs" />
     <Compile Include="PartSettings\ProductVatConfigurationPartInputPriceEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Routes\AddressesRoutes.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
+    <Compile Include="Routes\CouponRESTApiRoutes.cs" />
+    <Compile Include="Security\FacebookShopSynchronizationPermission.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
+    <Compile Include="Services\AttributesValidationContext.cs" />
+    <Compile Include="Services\CheckoutConditions\CheckoutConditionValidationContext.cs" />
     <Compile Include="Services\CheckoutConditions\EmptyCartCheckoutCondition.cs" />
-    <Compile Include="Services\CheckoutConditions\MinimumOrderQuantityCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\OrderQuantityCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\ProductOutOfStockCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\ProductsRequireAuthenticationCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\UserAcceptedPoliciesCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\UserAuthenticatedCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\WorkflowCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutExtensionContext.cs" />
     <Compile Include="Services\CheckoutHelperService.cs" />
+    <Compile Include="Services\CheckoutPoliciesOrderAdditionalInformationProvider.cs" />
+    <Compile Include="Services\CheckoutPoliciesService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopProductDeleteRequest.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopProductUpdateRequest.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopRequestContainer.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopService.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopServiceContext.cs" />
+    <Compile Include="Services\FacebookShop\IFacebookShopRequest.cs" />
     <Compile Include="Services\IAddressConfigurationService.cs" />
     <Compile Include="Services\GTMCartExtensionProvider.cs" />
     <Compile Include="Services\GTMMeasuringPurchaseService.cs" />
     <Compile Include="Services\GTMProductService.cs" />
     <Compile Include="Services\ICheckoutCondition.cs" />
+    <Compile Include="Services\ICheckoutExtensionProvider.cs" />
     <Compile Include="Services\ICheckoutHelperService.cs" />
+    <Compile Include="Services\ICheckoutPoliciesService.cs" />
+    <Compile Include="Services\FacebookShop\IFacebookShopService.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
@@ -194,13 +238,23 @@
     <Compile Include="Services\PaymentStatusProvider.cs" />
     <Compile Include="Services\IAddressConfigurationSettingsService.cs" />
     <Compile Include="Services\AddressConfigurationSettingsService.cs" />
+    <Compile Include="Services\UUIDCouponUserIdentifierProvider.cs" />
     <Compile Include="Services\ValidationAddressViewModelService.cs" />
+    <Compile Include="Services\WorkflowActtributesValidation.cs" />
     <Compile Include="ViewModels\AddressConfigurationTerritoryViewModel.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
+    <Compile Include="ViewModels\CheckoutPoliciesOrderViewModel.cs" />
+    <Compile Include="ViewModels\CheckoutPolicySettingsPartEditViewModel.cs" />
     <Compile Include="ViewModels\CheckoutSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
+    <Compile Include="ViewModels\FacebookShopProductPartViewModel.cs" />
+    <Compile Include="ViewModels\FacebookShopSiteSettingsViewModel.cs" />
+    <Compile Include="ViewModels\GA4ProductVM.cs" />
+    <Compile Include="ViewModels\GA4PurchaseVM.cs" />
+    <Compile Include="ViewModels\GA4ShippingInfoVM.cs" />
+    <Compile Include="ViewModels\IGAProductVM.cs" />
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
     <Compile Include="ViewModels\GTMProductVM.cs" />
@@ -216,6 +270,14 @@
   <ItemGroup>
     <Content Include="Assets.json" />
     <Content Include="Assets\Styles.less" />
+    <Content Include="Recipes\BaseProduct.recipe.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Recipes\SetupHierarchyTerritoryVatConfiguration.recipe.xml" />
+    <Content Include="Recipes\DefaultShippingMethods.recipe.xml" />
+    <Content Include="Recipes\SetupEcommerceTerritoriesVATShipping.recipe.xml" />
+    <Content Include="Recipes\SetupItalianVAT.recipe.xml" />
+    <Content Include="Recipes\SetupMVPTerritories.recipe.xml" />
     <Content Include="Scripts\address-configuration.js" />
     <Content Include="Scripts\address-configuration.min.js">
       <DependentUpon>address-configuration.js</DependentUpon>
@@ -271,6 +333,14 @@
       <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
       <Name>Orchard.MediaLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Projections\Orchard.Projections.csproj">
+      <Project>{5531e894-d259-45a3-aa61-26dbe720c1ce}</Project>
+      <Name>Orchard.Projections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Taxonomies\Orchard.Taxonomies.csproj">
+      <Project>{e649ea64-d213-461b-87f7-d67035801443}</Project>
+      <Name>Orchard.Taxonomies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
       <Project>{6F759635-13D7-4E94-BCC9-80445D63F117}</Project>
       <Name>Orchard.Tokens</Name>
@@ -287,9 +357,25 @@
       <Project>{bb12e69f-0976-407d-a716-542b7d22ee5f}</Project>
       <Name>Laser.Orchard.CommunicationGateway</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Cookies\Laser.Orchard.Cookies.csproj">
+      <Project>{bdb0cd8d-7c6c-46f0-a041-6b2e1e0f9c9e}</Project>
+      <Name>Laser.Orchard.Cookies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.GoogleAnalytics\Laser.Orchard.GoogleAnalytics.csproj">
+      <Project>{8df6ed57-53f6-44e8-9bcd-40c2150a5a43}</Project>
+      <Name>Laser.Orchard.GoogleAnalytics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.PaymentGateway\Laser.Orchard.PaymentGateway.csproj">
       <Project>{e6900a95-3d80-497d-ad29-998adc8ad3d7}</Project>
       <Name>Laser.Orchard.PaymentGateway</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Policy\Laser.Orchard.Policy.csproj">
+      <Project>{09a8fbda-b443-4f01-bc64-8115ac31abb3}</Project>
+      <Name>Laser.Orchard.Policy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
+      <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>
+      <Name>Laser.Orchard.StartupConfig</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -300,9 +386,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PaymentGatewayOrder.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Addresses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts\NwazetContact.cshtml" />
@@ -368,6 +451,16 @@
     <Content Include="Views\TerritorySelector.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ProductPriceWithVATEditor.cshtml" />
     <Content Include="Views\DefinitionTemplates\ProductVatConfigurationPartInputPriceSettingsVM.cshtml" />
+    <Content Include="Views\EditorTemplates\SiteSettings\CheckoutPolicySettings.cshtml" />
+    <Content Include="Views\CheckoutPoliciesCheckoutStartShape.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Order.CheckoutPolicies.cshtml" />
+    <Content Include="Views\EditorTemplates\SiteSettings\FacebookShopSiteSettings.cshtml" />
+    <Content Include="Views\DefinitionTemplates\FacebookShopProductPartSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\FacebookShopProductPartEditor.cshtml" />
+    <Content Include="Views\GA4CheckoutStep.cshtml" />
+    <Content Include="Views\GA4Purchase.cshtml" />
+    <Content Include="Views\GA4ShippingInfo.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\EcommerceAnalyticsSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
@@ -425,11 +518,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets" Condition="Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" />
+  <Import Project="..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets" Condition="Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets'))" />
   </Target>
 </Project>

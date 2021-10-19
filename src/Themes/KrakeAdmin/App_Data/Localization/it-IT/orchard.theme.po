@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -67,6 +67,10 @@ msgstr "Modifica"
 msgctxt "~/Themes/KrakeAdmin/Views/Content.SummaryAdmin.cshtml"
 msgid "More info"
 msgstr "Mostra più informazioni"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "  |  "
+msgstr "|"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
 msgid "Archive"
