@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -53,8 +53,8 @@ msgid "Please provide an e-mail address for us to use in order to give you updat
 msgstr "Per favore, inserite un indirizzo e-mail da usare per inviarvi aggiornamenti sul vostro ordine."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
-msgid "Please provide an international phone prefix, For example 0039 for Italy"
-msgstr "Per favore inserire un prefisso internazionale, ad esempio 0039 per l'Italia"
+msgid "Please provide an international phone prefix, For example +39 for Italy"
+msgstr "Per favore inserire un prefisso internazionale, ad esempio +39 per l'Italia"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
 msgid "Required information"
@@ -90,7 +90,7 @@ msgstr "Azienda"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
 msgid "First Name"
@@ -121,8 +121,28 @@ msgid "Postal or ZIP code"
 msgstr "Codice postale o ZIP"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Province, starting with a letter."
+msgstr "Provincia, deve iniziare con una lettera."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Select a city"
+msgstr "Seleziona una città"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Select a country"
+msgstr "Seleziona uno Stato"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Select a province"
+msgstr "Seleziona una provincia"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Select your Country from the list."
+msgstr "Seleziona il tuo Paese dall'elenco."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
 msgid "State, province, prefecture, republic or region"
-msgstr "Stato, provincia, prefettura, repubblica o regione"
+msgstr "Provincia"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
 msgid "Stored Billing Address"
@@ -154,7 +174,7 @@ msgstr "Caricamento in corso..."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Braintree/Index.cshtml"
 msgid "Pay now"
-msgstr "Paga adesso"
+msgstr "Paga ora"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Braintree/Index.cshtml"
 msgid "Pay with Braintree and PayPal"
@@ -178,7 +198,7 @@ msgstr "Azienda"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
 msgid "First Name"
@@ -202,7 +222,7 @@ msgstr "Codice postale o ZIP"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
 msgid "State, province, prefecture, republic or region"
-msgstr "Stato, provincia, prefettura, repubblica o regione"
+msgstr "Provincia"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
 msgid "Title"
@@ -218,7 +238,7 @@ msgstr "Lasciare vuoto per gli Stati Uniti d'America."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Fields.ContentPicker-RelatedProducts.cshtml"
 msgid "No content items."
-msgstr "Nessun contenuto."
+msgstr "Nessun elemento di contenuto."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Fields.ContentPicker-RelatedProducts.cshtml"
 msgid "Related Products"
@@ -242,11 +262,11 @@ msgstr "Registra"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/LogOnForm.cshtml"
 msgid "Lost your Password?"
-msgstr "Hai dimenticato la tua password?"
+msgstr "Hai perso la tua Password?"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/LogOnForm.cshtml"
 msgid "Remember Me"
-msgstr "Ricordami"
+msgstr "Ricorda le mie credenziali di accesso"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/LogOnForm.cshtml"
 msgid "Sign In"
@@ -278,15 +298,15 @@ msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'ac
 
 msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogonForm.cshtml"
 msgid "Login was unsuccessful. Please correct the errors and try again."
-msgstr "La login non è riuscita. Correggere gli errori e riprovare."
+msgstr "Accesso non effettuato. Correggi gli errori e riprova."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogonForm.cshtml"
 msgid "Lost your Password?"
-msgstr "Hai dimenticato la tua password?"
+msgstr "Hai perso la tua Password?"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogonForm.cshtml"
 msgid "Remember Me"
-msgstr "Ricordami"
+msgstr "Ricorda le mie credenziali di accesso"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogonForm.cshtml"
 msgid "Sign In"
@@ -318,11 +338,11 @@ msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'ac
 
 msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegisterForm.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
-msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+msgstr "Creazione utenza fallita. Correggi gli errori e riprova."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegisterForm.cshtml"
 msgid "Confirm password"
-msgstr "Conferma password"
+msgstr "Conferma la password"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegisterForm.cshtml"
 msgid "Email"
@@ -438,7 +458,7 @@ msgstr "Potrai visualizzare i dettagli del tuo ordine a questo indirizzo: <a hre
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ListOfWishLists.cshtml"
 msgid "Your Wish Lists:"
-msgstr "Le tue liste:"
+msgstr "Le tue Liste dei Desideri:"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.AdditionalInfo.Detail.cshtml"
 msgid "Product Information"
@@ -451,6 +471,10 @@ msgstr "Recensioni"
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.AddToCartFromWishList.cshtml"
 msgid "Add to cart"
 msgstr "Aggiungi al carrello"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.AddToCartFromWishList.cshtml"
+msgid "Adding"
+msgstr "In aggiunta"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.RemoveFromWishList.cshtml"
 msgid "Remove"
@@ -518,7 +542,7 @@ msgstr "Nessun commento."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
 msgid "Rate:"
-msgstr "Vota:"
+msgstr "Voto:"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
 msgid "Save"
@@ -528,9 +552,17 @@ msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.cshtml"
 msgid "Add to cart"
 msgstr "Aggiungi al carrello"
 
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.cshtml"
+msgid "Adding"
+msgstr "In aggiunta"
+
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.Detail.cshtml"
 msgid "Add to cart"
 msgstr "Aggiungi al carrello"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.Detail.cshtml"
+msgid "Adding"
+msgstr "In aggiunta"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddToWishListButton.cshtml"
 msgid "Add to WishList"
@@ -610,7 +642,7 @@ msgstr "Errore"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
 msgid "Failed"
-msgstr "Fallito"
+msgstr "Operazione fallita"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
 msgid "Outcome"
@@ -662,11 +694,11 @@ msgstr "Registra"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/RegisterForm.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
-msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+msgstr "Creazione utenza fallita. Correggi gli errori e riprova."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/RegisterForm.cshtml"
 msgid "Confirm password"
-msgstr "Conferma password"
+msgstr "Conferma la password"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/RegisterForm.cshtml"
 msgid "Email"
@@ -782,7 +814,7 @@ msgstr "Il tuo carrello contiene:"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.Summary.cshtml"
 msgid "items"
-msgstr "Oggetti"
+msgstr "elementi"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCartWidget.cshtml"
 msgid "Failed to load the cart"

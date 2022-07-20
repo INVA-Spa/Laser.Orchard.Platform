@@ -10,6 +10,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Diagnostics;
+using Orchard.Environment.Configuration;
+using Laser.Orchard.StartupConfig.Providers;
 
 namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
@@ -31,10 +33,17 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
     }
 
     public class RazorTemplateManager : IRazorTemplateManager {
+        private readonly IOrchardServices _orchardServices;
+        private readonly ShellSettings _shellSettings;
 
-        public RazorTemplateManager() {
+        public RazorTemplateManager(ShellSettings shellSettings, 
+            IOrchardServices orchardServices,
+            IEnumerable<ICustomRazorTemplateResolver> razorTemplateResolvers) {
             listCached = new List<string>();
             listOldCached = new List<string>();
+
+            _orchardServices = orchardServices;
+            _shellSettings = shellSettings;
         }
 
         private List<string> listCached;
@@ -64,13 +73,17 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             config.Namespaces.Add("Orchard");
             config.Namespaces.Add("Orchard.ContentManagement");
             config.Namespaces.Add("Orchard.Caching");
+            config.Namespaces.Add("Orchard.Localization");
             //config.Namespaces.Add("System.Web.Helpers");
             config.ReferenceResolver = new MyIReferenceResolver();
+            
+            config.TemplateManager = new CustomRazorTemplateManager(_shellSettings, _orchardServices);
+            //config.CachingProvider = new CustomRazorCachingProvider();
 
             _razorEngine = RazorEngineService.Create(config);
+            
             listOldCached.AddRange(listCached);
             listCached = new List<string>();
-
         }
 
         private IRazorEngineService _razorEngine;
@@ -106,7 +119,14 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                     if (string.IsNullOrEmpty(defFileName))
                         defFileName = key;
                     defFileName = System.IO.Path.GetTempPath() + defFileName + ".cshtml";
-                    code = "@{System.Diagnostics.Debugger.Break();}" + code;
+                    // add a breakpoint so we can debug the templates
+                    code = 
+                        "@{"
+                        +   "if (System.Diagnostics.Debugger.IsAttached) {"
+                        +     "System.Diagnostics.Debugger.Break();"
+                        +   "}"
+                        + "}" 
+                        + code;
                     File.WriteAllText(defFileName, code);
 
                     RazorEngineServiceStatic.AddTemplate(key, new LoadedTemplateSource(code, defFileName));

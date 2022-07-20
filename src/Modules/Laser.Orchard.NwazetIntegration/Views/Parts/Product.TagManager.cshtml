@@ -1,23 +1,33 @@
 ﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
 @using Laser.Orchard.NwazetIntegration.Services;
 @{
-    var gtmProductVM = (GTMProductVM)Model.GTMProductVM;
-    var arrayName =
-        string.IsNullOrWhiteSpace(Model.DisplayType)
-        || ((string)Model.DisplayType).Equals("detail", StringComparison.InvariantCultureIgnoreCase)
-        ? "detail.products" : "impressions";
 
     var _GTMProductService = WorkContext.Resolve<IGTMProductService>();
-    Script.Require("NwazetIntegration.TagManager").AtHead();
+    if (_GTMProductService.ShoulAddEcommerceTags()) {
+        IGAProductVM gtmProductVM;
+        if (_GTMProductService.UseGA4()) {
+            gtmProductVM = (GA4ProductVM)Model.ProductVM;
+        } else {
+            gtmProductVM = (GTMProductVM)Model.ProductVM;
+        }
 
-    using (Script.Head()) {
-        <script type="text/javascript">
-            window.ecommerceData = $.extend(true, {}, window.ecommerceData);
-            window.ecommerceData.detail = $.extend(true, {}, window.ecommerceData.detail);
-            window.ecommerceData.@(arrayName) = window.ecommerceData.@(arrayName) || [];
-            window.ecommerceData.@(arrayName).push(
-                @Html.Raw(_GTMProductService.GetJsonString(gtmProductVM))
-            );
-        </script>
+        var arrayName =
+            string.IsNullOrWhiteSpace(Model.DisplayType)
+            || ((string)Model.DisplayType).Equals("detail", StringComparison.InvariantCultureIgnoreCase)
+            ? "detail.products" : "impressions";
+
+        Script.Require("NwazetIntegration.TagManager").AtHead();
+
+        using (Script.Head()) {
+            <script type="text/javascript">
+                window.ecommerceData = $.extend(true, {}, window.ecommerceData);
+                window.ecommerceData.detail = $.extend(true, {}, window.ecommerceData.detail);
+                window.ecommerceData.@(arrayName) = window.ecommerceData.@(arrayName) || [];
+                window.ecommerceData.@(arrayName).push(
+                    @Html.Raw(_GTMProductService.GetJsonString(gtmProductVM))
+                );
+            </script>
+        }
     }
+    
 }

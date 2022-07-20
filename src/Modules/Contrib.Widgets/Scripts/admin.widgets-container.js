@@ -21,6 +21,7 @@ var WidgetsContainer;
                 formActionValue.val("submit.Save");
                 $("input[type='hidden'][name='returnUrl']").val(url);
             }
+
             form.submit();
         });
         $("div.widgets").on("click", "a.remove-widget", function (e) {
@@ -65,13 +66,26 @@ var WidgetsContainer;
                 updateWidgetPlacementField();
             }
         });
-        $("#widgetsPlacement legend").expandoControl(function (controller) {
-            return controller.nextAll(".expando");
-        }, {
-            collapse: false,
-            remember: true,
-            context: "widget-container" 
+
+        if ($(".expando-glyph-container", $("#widgetsPlacement legend")).length == 0) {
+            $("#widgetsPlacement legend").expandoControl(function (controller) {
+                return controller.nextAll(".expando");
+            }, {
+                collapse: false,
+                remember: true,
+                context: "widget-container"
+            });
+        }
+
+        $("span.expando-glyph-container","#widgetsPlacement").each(function () {
+            $(this).click(function () {
+                if (localStorage.getItem("widget-container-state") === "close" ||
+                    localStorage.getItem("widget-container-state") === null) {
+                    localStorage.setItem("widget-container-state", 'open');
+                } else {
+                    localStorage.setItem("widget-container-state", 'close');
+                }
+            });
         });
     });
 })(WidgetsContainer || (WidgetsContainer = {}));
-

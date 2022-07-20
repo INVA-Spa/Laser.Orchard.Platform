@@ -17,6 +17,9 @@ using Orchard.Localization.Services;
 using Orchard.Themes.Services;
 using Orchard.Widgets.Services;
 using Contrib.Widgets.Settings;
+using Orchard.Security;
+using Orchard.Localization;
+using Orchard.UI.Notify;
 
 namespace Contrib.Widgets.Drivers {
     [OrchardFeature("Contrib.Widgets")]
@@ -27,12 +30,24 @@ namespace Contrib.Widgets.Drivers {
         private readonly IWidgetManager _widgetManager;
         private readonly IWorkContextAccessor _wca;
         private readonly IContentManager _contentManager;
-        private readonly IOrchardServices _services;
         private readonly ILocalizationService _localizationService;
         private readonly ICultureManager _cultureManager;
+        private readonly IAuthorizer _authorizer;
+        private readonly INotifier _notifier;
 
+        public WidgetsContainerPartDriver(
+            ISiteThemeService siteThemeService, 
+            IWidgetsService widgetsService, 
+            IVirtualPathProvider virtualPathProvider, 
+            IShapeFactory shapeFactory, 
+            IWidgetManager widgetManager, 
+            IWorkContextAccessor wca, 
+            IContentManager contentManager, 
+            ILocalizationService localizationService, 
+            ICultureManager cultureManager,
+            IAuthorizer authorizer,
+            INotifier notifier) {
 
-        public WidgetsContainerPartDriver(ISiteThemeService siteThemeService, IWidgetsService widgetsService, IVirtualPathProvider virtualPathProvider, IShapeFactory shapeFactory, IWidgetManager widgetManager, IWorkContextAccessor wca, IContentManager contentManager, IOrchardServices services, ILocalizationService localizationService, ICultureManager cultureManager) {
             _siteThemeService = siteThemeService;
             _widgetsService = widgetsService;
             _virtualPathProvider = virtualPathProvider;
@@ -40,10 +55,15 @@ namespace Contrib.Widgets.Drivers {
             _widgetManager = widgetManager;
             _wca = wca;
             _contentManager = contentManager;
-            _services = services;
             _localizationService = localizationService;
             _cultureManager = cultureManager;
+            _authorizer = authorizer;
+            _notifier = notifier;
+
+            T = NullLocalizer.Instance;
         }
+
+        public Localizer T { get; set; }
 
         private dynamic New { get; set; }
 
@@ -81,6 +101,9 @@ namespace Contrib.Widgets.Drivers {
 
         protected override DriverResult Editor(WidgetsContainerPart part, dynamic shapeHelper) {
             return ContentShape("Parts_WidgetsContainer", () => {
+                if (!_authorizer.Authorize(Permissions.ManageContainerWidgets)) {
+                    return null;
+                }
                 var settings = part.Settings.GetModel<WidgetsContainerSettings>();
 
                 var currentTheme = _siteThemeService.GetSiteTheme();
@@ -151,8 +174,22 @@ namespace Contrib.Widgets.Drivers {
 
             var widgetIds = JsonConvert.DeserializeObject<int[]>(viewModel.RemovedWidgets);
 
+            var unableToDeleteSome = false;
             foreach (var widgetId in widgetIds) {
-                _widgetsService.DeleteWidget(widgetId);
+                // make sure that the user is allowed to delete the widget.
+                // Doing this check here handles cases where the UI is not aligned with the 
+                // configuration, because the latter changed but the former hasn't updated
+                // yet.
+                var currentWidget = _widgetsService.GetWidget(widgetId);
+                if(_authorizer.Authorize(
+                    Orchard.Core.Contents.Permissions.DeleteContent, currentWidget)) {
+                    _widgetsService.DeleteWidget(widgetId);
+                } else {
+                    unableToDeleteSome = true;
+                }
+            }
+            if (unableToDeleteSome) {
+                _notifier.Warning(T("You don't have the permissions to remove some of the widgets you attempted to delete."));
             }
         }
 
@@ -210,14 +247,14 @@ namespace Contrib.Widgets.Drivers {
                 //var widgetPart = _widgetsService.GetWidget(widget.Id);
 
                 // Clono il ContentMaster e recupero la parte WidgetExPart
-                var clonedContentitem = _services.ContentManager.Clone(widget.ContentItem);
+                var clonedContentitem = _contentManager.Clone(widget.ContentItem);
 
                 var widgetExPart = clonedContentitem.As<WidgetExPart>();
 
                 // assegno il nuovo contenitore se non nullo ( nel caso di HtmlWidget per esempio la GetWidget ritorna nullo...)
                 if (widgetExPart != null) {
                     widgetExPart.Host = destinationContentItem;
-                    _services.ContentManager.Publish(widgetExPart.ContentItem);
+                    _contentManager.Publish(widgetExPart.ContentItem);
                 }
 
             }
@@ -231,14 +268,14 @@ namespace Contrib.Widgets.Drivers {
             var widgets = _widgetManager.GetWidgets(original.Id, original.IsPublished());
             foreach (var widget in widgets) {
                 // Clono il ContentMaster e recupero la parte WidgetExPart
-                var clonedContentitem = _services.ContentManager.Clone(widget.ContentItem);
+                var clonedContentitem = _contentManager.Clone(widget.ContentItem);
 
                 var widgetExPart = clonedContentitem.As<WidgetExPart>();
 
                 // assegno il nuovo contenitore se non nullo ( nel caso di HtmlWidget per esempio la GetWidget ritorna nullo...)
                 if (widgetExPart != null) {
                     widgetExPart.Host = destination;
-                    _services.ContentManager.Publish(widgetExPart.ContentItem);
+                    _contentManager.Publish(widgetExPart.ContentItem);
                 }
 
                 // se il widget ha una LocalizationPart, la gestisco
