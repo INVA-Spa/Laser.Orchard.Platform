@@ -129,7 +129,8 @@ namespace Laser.Orchard.TemplateManagement {
             // note that doing Query<TPart>() is terrible because it fetches ALL CONTENT ITEMS
             // and the filters, in memory, for those that have the Part attached. Adding TRecord
             // should cause a Join to pre-filter out a bunch of stuff.
-            var templates = _contentManager.Query<TemplatePart, TemplatePartRecord>().List();
+            var templates = _contentManager.Query<TemplatePart>().List();
+            //var templates = _contentManager.Query<TemplatePart, TemplatePartRecord>().List();
             var sendTemplateActivities = _repositoryActivity.Table.Where(x => x.Name == "SendTemplatedEmail").ToList();
 
             foreach (var sendActivity in sendTemplateActivities) {
