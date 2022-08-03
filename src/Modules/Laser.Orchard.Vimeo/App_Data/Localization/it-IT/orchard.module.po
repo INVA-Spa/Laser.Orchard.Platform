@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -154,7 +154,7 @@ msgstr "Token di accesso autorizzato"
 
 msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoActivity"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoActivity"
 msgid "Vimeo"

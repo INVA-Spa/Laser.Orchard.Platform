@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -38,7 +38,7 @@ msgstr "Azienda"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "First Name"
@@ -94,7 +94,7 @@ msgstr "Indirizzo di spedizione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "State, province, prefecture, republic or region"
-msgstr "Stato, provincia, prefettura, repubblica o regione"
+msgstr "Provincia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Title"
@@ -186,7 +186,7 @@ msgstr "Aggiungi Indirizzo"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
 msgid "Billing Addresses"
-msgstr "Indirizzo di Fatturazione"
+msgstr "Indirizzi di Fatturazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
 msgid "Delete"
@@ -218,7 +218,7 @@ msgstr "Azienda"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Country: {0}"
@@ -278,7 +278,7 @@ msgstr "Seleziona il tuo Paese dall'elenco."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "State, province, prefecture, republic or region"
-msgstr "Stato, provincia, prefettura, repubblica o regione"
+msgstr "Provincia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Stored Billing Address"
@@ -310,7 +310,7 @@ msgstr "Clicca qui per cambiare gli indirizzi selezionati."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
 msgid "Email address"
-msgstr "Indirizzo Email"
+msgstr "Indirizzo email"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
 msgid "Phone number"
@@ -354,7 +354,7 @@ msgstr "e-mail"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "International Phone Prefix"
-msgstr "Prefisso internazionale"
+msgstr "Prefisso telefonico internazionale"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "Next"
@@ -550,7 +550,7 @@ msgstr "Azienda"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
 msgid "First Name"
@@ -624,6 +624,30 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Address
 msgid "Title or honorific, e.g. Mr., Mrs., Dr., San, etc."
 msgstr "Titolo o onorifico, e.g. Sig., Dott., etc."
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceAnalyticsSettings.cshtml"
+msgid "Choose the level of cookies of Ecommerce Analitics."
+msgstr "Seleziona il livello dei cookies di Ecommerce Analytics."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceAnalyticsSettings.cshtml"
+msgid "Ecommerce Analitics Cookie Level"
+msgstr "Livello dei Cookie di Ecommerce Analytics."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceAnalyticsSettings.cshtml"
+msgid "Marketing"
+msgstr "Marketing"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceAnalyticsSettings.cshtml"
+msgid "Preferences"
+msgstr "Preferenze"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceAnalyticsSettings.cshtml"
+msgid "Statistical"
+msgstr "Statistici"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceAnalyticsSettings.cshtml"
+msgid "Technical"
+msgstr "Tecnici"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/FacebookShopProductPartEditor.cshtml"
 msgid "Keep the product synchronized with Facebook Shop every time the product is published."
 msgstr "Mantieni il prodotto sincronizzato nel negozio di Facebook ogni volta che viene pubblicato."
@@ -673,12 +697,16 @@ msgid "Date"
 msgstr "Data"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Error"
 msgstr "Errore"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Failed"
-msgstr "Fallito"
+msgstr "Operazione fallita"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Outcome"
@@ -702,6 +730,10 @@ msgstr "Riuscito"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Transacion ID"
+msgstr "ID Transazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Transaction ID"
 msgstr "ID Transazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
@@ -802,7 +834,7 @@ msgstr "Stati: {0}"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
 msgid "Province"
@@ -946,7 +978,7 @@ msgstr "E-Commerce"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateAttributesActivity"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
 msgid "A user is attempting to advance in checkout."
@@ -954,7 +986,7 @@ msgstr "Un utente sta cerando di procedere al checkout."
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
 msgid "Events"
@@ -970,7 +1002,7 @@ msgstr "Criteri sui cookies della request"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
 msgid "Http Request"
-msgstr "Richiesta HTTP (HTTP Request)"
+msgstr "Richiesta http"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
 msgid "Test request cookies"
@@ -986,7 +1018,7 @@ msgstr "Criteri per determinate intestazioni delle richiesta (Request Headers)"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
 msgid "Http Request"
-msgstr "Richiesta HTTP (HTTP Request)"
+msgstr "Richiesta http"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
 msgid "Request header"
@@ -1125,6 +1157,10 @@ msgid "At least one line is a product of the given category or one of its childr
 msgstr "Almeno una riga è un prodotto della categoria indicata o una delle sue sottocategorie."
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "At least one line is a product of the given category."
+msgstr "Almeno una riga è un prodotto della categoria selezionata."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
 msgid "At least one lines are a products of the given category."
 msgstr "Almeno una riga è un prodotto della categoria indicata."
 
@@ -1143,6 +1179,14 @@ msgstr "Le righe del carrello non sono prodotti della categoria indicata o una d
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
 msgid "Cart lines are not products of the given category."
 msgstr "Le righe del carrello non sono prodotti della categoria indicata."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Cart lines are products of the given category or one of its children."
+msgstr "Le righe del carrello sono prodotti della categoria selezionata o di una delle sue sottocategorie."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Cart lines are products of the given category."
+msgstr "Le righe del carrello sono prodotti della categoria selezionata."
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
 msgid "Cart products"
@@ -1406,7 +1450,7 @@ msgstr "Tipi di Contenuto"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.ProductContentTypeForm"
 msgid "Select some content types."
-msgstr "Selezionare i tipi di contenuto"
+msgstr "Scegli almeno un tipo di contenuto."
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
 msgid "(Administrative type: {0})"
@@ -1422,7 +1466,7 @@ msgstr "Città"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
 msgid "Not authorized to manage address configuration settings"
@@ -1512,13 +1556,17 @@ msgctxt "Laser.Orchard.NwazetIntegration.Drivers.OrderPartDriver"
 msgid "Cannot manage orders"
 msgstr "Impossibile gestire gli ordini"
 
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.OrderPartDriver"
+msgid "Transaction id changed from {0} to {1}"
+msgstr "Id transazione modificato da {0} a {1}"
+
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
 msgid "City"
 msgstr "Città"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
 msgid "Province"
@@ -1709,6 +1757,10 @@ msgid "{0} products synchronized on Facebook Shop."
 msgstr "{0} prodotti sincronizzati sul negozio di Facebook"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Error when checking Facebook Shop handle"
+msgstr "Errore durante la verifica dell'handle di Facebook Shop"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
 msgid "Invalid data"
 msgstr "Dati non validi"
 
@@ -1723,6 +1775,10 @@ msgstr "Indirizzo dell'immagine non valido"
 msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
 msgid "Invalid product description (body part not found)"
 msgstr "Descrizione del prodotto non valida (parte corpo non trovata)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Invalid product description (description must not be all upper case)"
+msgstr "Descrizione del prodotto non valida (la descrizione non deve essere tutta in maiuscolo)"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
 msgid "Invalid Product part or Facebook part."
@@ -1751,6 +1807,10 @@ msgstr "Parte prodotto o parte Facebook non valide."
 msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
 msgid "Payment Failed"
 msgstr "Pagamento Fallito"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
+msgid "Payment Pending"
+msgstr "Pagamento in sospeso"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
 msgid "Payment Succeeded"

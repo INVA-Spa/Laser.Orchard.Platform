@@ -59,8 +59,9 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -144,6 +145,7 @@
     <Compile Include="Drivers\AddressConfigurationSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\TerritoryAddressTypePartDriver.cs" />
     <Compile Include="Drivers\TerritoryAdministrativeTypePartDriver.cs" />
+    <Compile Include="Drivers\TerritoryISO3166CodePartDriver.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
     <Compile Include="Filters\CheckoutStepsFilter.cs" />
@@ -161,8 +163,7 @@
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Handlers\AddressConfigurationSiteSettingsPartHandler.cs" />
-    <Compile Include="Handlers\TerritoryAddressTypePartHandler.cs" />
-    <Compile Include="Handlers\TerritoryAdministrativeTypePartHandler.cs" />
+    <Compile Include="Handlers\TerritoryPartExtensionsHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Migration\MigrationsFacebookShop.cs" />
     <Compile Include="Models\AddressOrderPart.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
     <Compile Include="Models\EcommerceAnalyticsSettingsPart.cs" />
+    <Compile Include="Models\FacebookShopHandleRecord.cs" />
     <Compile Include="Models\FacebookShopProductPart.cs" />
     <Compile Include="Models\FacebookShopProductPartRecord.cs" />
     <Compile Include="Models\FacebookShopSiteSettingsPart.cs" />
@@ -186,6 +188,8 @@
     <Compile Include="Models\TerritoryAddressTypePartRecord.cs" />
     <Compile Include="Models\TerritoryAdministrativeTypePart.cs" />
     <Compile Include="Models\TerritoryAdministrativeTypePartRecord.cs" />
+    <Compile Include="Models\TerritoryISO3166CodePart.cs" />
+    <Compile Include="Models\TerritoryISO3166CodePartRecord.cs" />
     <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
     <Compile Include="Navigation\FacebookSiteSettingsAdminMenu.cs" />
     <Compile Include="PartSettings\FacebookShopProductPartEditorEvents.cs" />
@@ -238,6 +242,11 @@
     <Compile Include="Services\PaymentStatusProvider.cs" />
     <Compile Include="Services\IAddressConfigurationSettingsService.cs" />
     <Compile Include="Services\AddressConfigurationSettingsService.cs" />
+    <Compile Include="Services\Pos\BankTransferIntegrationService.cs" />
+    <Compile Include="Services\Pos\CashOnDeliveryIntegrationService.cs" />
+    <Compile Include="Services\Pos\CustomPosOrderFrontEndAdditionalInformationProvider.cs" />
+    <Compile Include="Services\Pos\IPosIntegrationService.cs" />
+    <Compile Include="Services\Pos\PosIntegrationServiceBase.cs" />
     <Compile Include="Services\UUIDCouponUserIdentifierProvider.cs" />
     <Compile Include="Services\ValidationAddressViewModelService.cs" />
     <Compile Include="Services\WorkflowActtributesValidation.cs" />
@@ -265,6 +274,7 @@
     <Compile Include="ViewModels\ProductVatConfigurationPartInputPriceSettingsVM.cs" />
     <Compile Include="ViewModels\TerritoryAddressTypeEditViewModel.cs" />
     <Compile Include="ViewModels\TerritoryAdministrativeTypeEditViewModel.cs" />
+    <Compile Include="ViewModels\TerritoryISO3166CodeEditViewModel.cs" />
     <Compile Include="ViewModels\TerritoryTag.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -461,6 +471,7 @@
     <Content Include="Views\GA4Purchase.cshtml" />
     <Content Include="Views\GA4ShippingInfo.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\EcommerceAnalyticsSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Territory.ISO3166Code.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

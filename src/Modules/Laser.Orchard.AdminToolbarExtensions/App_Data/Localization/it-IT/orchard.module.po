@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -22,7 +22,7 @@ msgstr "L'URL Personalizzato è una serie di parametri da aggiungere alla query 
 
 msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
 msgid "Action"
-msgstr "Action"
+msgstr "Azione"
 
 msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
 msgid "Area"
