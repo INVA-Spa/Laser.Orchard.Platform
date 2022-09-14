@@ -6,19 +6,18 @@ using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Configuration;
 using Orchard.Localization.Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Orchard.UI.Resources;
-using System.Collections.Generic;
 
-namespace Laser.Orchard.CulturePicker.Drivers {
+namespace Laser.Orchard.CulturePicker.Drivers
+{
 
     public class CulturePickerPartDriver : ContentPartDriver<CulturePickerPart> {
         private readonly ICultureManager _cultureManager;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ICulturePickerSettingsService _extendedCultureService;
         private readonly ILocalizableContentService _localizableContentService;
-        private readonly IResourceManager _resourceManager;
         private IEnumerable<ILocalizableRouteService2> _localizableRouteService;
 
         public CulturePickerPartDriver(
