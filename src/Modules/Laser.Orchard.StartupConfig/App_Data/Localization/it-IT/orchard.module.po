@@ -1757,6 +1757,10 @@ msgid "Invalid User"
 msgstr "Utente non valido"
 
 msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
+msgid "Invalid value for username or password"
+msgstr "Valore non valido per nome utente o password"
+
+msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
 msgid "It seems you have not yet accepted the required policies"
 msgstr "Sembra che tu non abbia ancora accettato la policy associata."
 
@@ -1775,6 +1779,10 @@ msgstr "Eseguito con successo"
 msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
 msgid "Thank you for registering. We sent you an e-mail with instructions to enable your account."
 msgstr "Grazie per esserti registrato. Ti abbiamo inviato una e-mail con le istruzioni per attivare la tua utenza."
+
+msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
+msgid "The password is expired"
+msgstr "La password è scaduta"
 
 msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
 msgid "UnAuthorized Action"
@@ -1939,6 +1947,30 @@ msgstr "ProprietarioEmail"
 msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnerEmailToken"
 msgid "The email of user creator."
 msgstr "L'email dell'utente creatore."
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "Content"
+msgstr "Contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "Owner of content item or User content item."
+msgstr "Proprietario del contenuto o contenuto Utente."
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "Owner or User"
+msgstr "Proprietario o Utente"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "OwnerEmail"
+msgstr "ProprietarioEmail"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "The email of user creator."
+msgstr "L'email dell'utente creatore."
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "The processed content"
+msgstr "Il contenuto elaborato"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.ParameterToken"
 msgid "Parameter:<PartName-PropertyName>"
