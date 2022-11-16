@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -34,7 +34,7 @@ msgstr "Consenti all'utente la selezione di un testo da condividere"
 
 msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
 msgid "Link"
-msgstr "Link"
+msgstr "Collegamento"
 
 msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
 msgid "Link to share"
@@ -94,7 +94,7 @@ msgstr "Lista di immagini"
 
 msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLink.cshtml"
 msgid "Link"
-msgstr "Link"
+msgstr "Collegamento"
 
 msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLink.cshtml"
 msgid "Sharing"
@@ -118,7 +118,7 @@ msgstr "Fb_appId"
 
 msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
 msgid "Link"
-msgstr "Link"
+msgstr "Collegamento"
 
 msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
 msgid "Link to share"

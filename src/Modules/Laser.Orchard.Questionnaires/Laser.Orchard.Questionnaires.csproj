@@ -98,6 +98,7 @@
     <Compile Include="Permissions.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Routes.cs" />
+    <Compile Include="Services\AdditionalCookieProvider.cs" />
     <Compile Include="Services\IQuestionnairesServices.cs" />
     <Compile Include="Services\IQuestionAnswerRepositoryService.cs" />
     <Compile Include="Services\QuestionnairesServices.cs" />
@@ -199,12 +200,12 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\NHibernate.4.1.2.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -311,6 +312,10 @@
     <ProjectReference Include="..\Laser.Orchard.ContentExtension\Laser.Orchard.ContentExtension.csproj">
       <Project>{0889fcd5-17e7-401a-8377-e308b797ac66}</Project>
       <Name>Laser.Orchard.ContentExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Cookies\Laser.Orchard.Cookies.csproj">
+      <Project>{BDB0CD8D-7C6C-46F0-A041-6B2E1E0F9C9E}</Project>
+      <Name>Laser.Orchard.Cookies</Name>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.Events\Laser.Orchard.Events.csproj">
       <Project>{fc5b52ec-3cf9-42da-850d-36d110bbe121}</Project>

@@ -26,6 +26,8 @@ using Newtonsoft.Json.Linq;
 using Laser.Orchard.StartupConfig.IdentityProvider;
 using System.Collections;
 using Orchard.Localization.Services;
+using Orchard.FileSystems.Media;
+using Orchard.Tokens;
 
 namespace Laser.Orchard.StartupConfig.Services {
 
@@ -53,6 +55,9 @@ namespace Laser.Orchard.StartupConfig.Services {
         /// <param name="stereotypes">An <type>IEnumerable<PermissionStereotype></type> obtained for example by a call to
         /// <example>new Permissions().GetDefaultStereotypes();</example></param>
         void UpdateStereotypesPermissions(IEnumerable<PermissionStereotype> stereotypes);
+
+
+        Response GetResponse(bool success, ErrorCode errorCode, ResolutionAction resolutionAction, string message = "", dynamic data = null);
 
         Response GetResponse(ResponseType rsptype, string message = "", dynamic data = null);
         /// <summary>
@@ -97,13 +102,15 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly ITaxonomyService _taxonomyService;
         private readonly IOrchardServices _orchardServices;
         private readonly ILocalizationService _localizationServices;
+        private readonly ITokenizer _tokenizer;
 
-        public UtilsServices(IModuleService moduleService, ShellSettings settings, IRoleService roleService, ITaxonomyService taxonomyService, IOrchardServices orchardServices, ILocalizationService localizationServices) {
+        public UtilsServices(IModuleService moduleService, ShellSettings settings, IRoleService roleService, ITaxonomyService taxonomyService, IOrchardServices orchardServices, ILocalizationService localizationServices, ITokenizer tokenizer) {
             _moduleService = moduleService;
             _roleService = roleService;
             _taxonomyService = taxonomyService;
             _orchardServices = orchardServices;
             _localizationServices = localizationServices;
+            _tokenizer = tokenizer;
             var mediaPath = HostingEnvironment.IsHosted
                                 ? HostingEnvironment.MapPath("~/Media/") ?? ""
                                 : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
@@ -127,85 +134,99 @@ namespace Laser.Orchard.StartupConfig.Services {
             T = NullLocalizer.Instance;
         }
 
+
+        public Response GetResponse(bool success, ErrorCode errorCode, ResolutionAction resolutionAction, string message = "", dynamic data = null) {
+            Response rsp = new Response();
+            rsp.Message = message;
+            rsp.Data = data;
+            rsp.Success = success;
+            rsp.ErrorCode = errorCode;
+            rsp.ResolutionAction = resolutionAction;
+
+            return rsp;
+        }
+
+
         public Response GetResponse(ResponseType rsptype, string message = "", dynamic data = null) {
             Response rsp = new Response();
             rsp.Message = message;
             switch (rsptype) {
                 case ResponseType.Success:
-                    rsp.Success = true;
-                    if (message != "")
-                        rsp.Message = message;
-                    else
-                        rsp.Message = T("Successfully Executed").ToString();
-                    rsp.ErrorCode = ErrorCode.NoError;
-                    rsp.Data = data;
-                    rsp.ResolutionAction = ResolutionAction.NoAction;
+                    rsp = GetResponse(true,
+                        ErrorCode.NoError,
+                        ResolutionAction.NoAction,
+                        string.IsNullOrWhiteSpace(message) ? T("Successfully Executed").ToString() : message,
+                        data);
                     break;
 
                 case ResponseType.InvalidUser:
-                    rsp.Success = false;
-                    if (message != "")
-                        rsp.Message = message;
-                    else
-                        rsp.Message = T("Invalid User").ToString();
-                    rsp.ErrorCode = ErrorCode.InvalidUser;
-                    rsp.Data = data;
-                    rsp.ResolutionAction = ResolutionAction.Login;
+                    rsp = GetResponse(false,
+                       ErrorCode.InvalidUser,
+                       ResolutionAction.Login,
+                       string.IsNullOrWhiteSpace(message) ? T("Invalid User").ToString() : message,
+                       data);
                     break;
 
                 case ResponseType.InvalidXSRF:
-                    rsp.Success = false;
-                    if (message != "")
-                        rsp.Message = message;
-                    else
-                        rsp.Message = T("Invalid Token/csrfToken").ToString();
-                    rsp.ErrorCode = ErrorCode.InvalidXSRF;
-                    rsp.Data = data;
-                    rsp.ResolutionAction = ResolutionAction.Login;
+                    rsp = GetResponse(false,
+                      ErrorCode.InvalidXSRF,
+                      ResolutionAction.Login,
+                      string.IsNullOrWhiteSpace(message) ? T("Invalid Token/csrfToken").ToString() : message,
+                      data);
                     break;
 
                 case ResponseType.Validation:
-                    rsp.Success = false;
-                    if (message != "")
-                        rsp.Message = message;
-                    else
-                        rsp.Message = T("Validation error").ToString();
-                    rsp.ErrorCode = ErrorCode.Validation;
-                    rsp.Data = data;
-                    rsp.ResolutionAction = ResolutionAction.NoAction;
+                    rsp = GetResponse(false,
+                      ErrorCode.Validation,
+                      ResolutionAction.NoAction,
+                      string.IsNullOrWhiteSpace(message) ? T("Validation error").ToString() : message,
+                      data);
                     break;
 
                 case ResponseType.UnAuthorized:
+                    rsp = GetResponse(false,
+                  ErrorCode.UnAuthorized,
+                  ResolutionAction.NoAction,
+                  string.IsNullOrWhiteSpace(message) ? T("UnAuthorized Action").ToString() : message,
+                  data);
+                    break;
+
+                case ResponseType.MissingPolicies:
+                    rsp = GetResponse(false,
+                ErrorCode.MissingPolicies,
+                ResolutionAction.AcceptPolicies,
+                string.IsNullOrWhiteSpace(message) ? T("It seems you have not yet accepted the required policies").ToString() : message,
+                data);
+                    break;
+
+                case ResponseType.ToConfirmEmail:
+                    rsp = GetResponse(false,
+                ErrorCode.ToConfirmEmail,
+                ResolutionAction.ToConfirmEmail,
+                string.IsNullOrWhiteSpace(message) ? T("Thank you for registering. We sent you an e-mail with instructions to enable your account.").ToString() : message,
+                data);
+                    break;
+
+                case ResponseType.MissingParameters:
                     rsp.Success = false;
                     if (message != "")
                         rsp.Message = message;
                     else
-                        rsp.Message = T("UnAuthorized Action").ToString();
-                    rsp.ErrorCode = ErrorCode.UnAuthorized;
+                        rsp.Message = T("Invalid value for username or password").ToString();
+                    rsp.ErrorCode = ErrorCode.MissingParameters;
                     rsp.Data = data;
                     rsp.ResolutionAction = ResolutionAction.NoAction;
                     break;
 
-                case ResponseType.MissingPolicies:
+                case ResponseType.ExpiredPassword:
                     rsp.Success = false;
                     if (message != "")
                         rsp.Message = message;
                     else
-                        rsp.Message = T("It seems you have not yet accepted the required policies").ToString();
-                    rsp.ErrorCode = ErrorCode.MissingPolicies;
+                        rsp.Message = T("The password is expired").ToString();
+                    rsp.ErrorCode = ErrorCode.ExpiredPassword;
                     rsp.Data = data;
-                    rsp.ResolutionAction = ResolutionAction.AcceptPolicies;
-                    break;
-
-                case ResponseType.ToConfirmEmail:
-                    rsp.Success = false;
-                    if (message != "")
-                        rsp.Message = message;
-                    else
-                        rsp.Message = T("Thank you for registering. We sent you an e-mail with instructions to enable your account.").ToString();
-                    rsp.ErrorCode = ErrorCode.ToConfirmEmail;
-                    rsp.Data = data;
-                    rsp.ResolutionAction = ResolutionAction.ToConfirmEmail;
+                    rsp.ResolutionAction = ResolutionAction.ToChangeExpiredPassword;
                     break;
             }
             return rsp;
@@ -287,7 +308,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             var features = _moduleService.GetAvailableFeatures().ToDictionary(m => m.Descriptor.Id, m => m);
 
             if (features.ContainsKey(featureId) && !features[featureId].IsEnabled) {
-                _moduleService.EnableFeatures(new string[] { featureId },true);
+                _moduleService.EnableFeatures(new string[] { featureId }, true);
             }
         }
 
@@ -342,7 +363,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                         var taxobase = _taxonomyService.GetTaxonomyByName(fieldObj.PartFieldDefinition.Settings["TaxonomyFieldSettings.Taxonomy"]);
 
                         List<TaxoVM> second = null;
-                        if(value is List<TaxoVM>) {
+                        if (value is List<TaxoVM>) {
                             second = (List<TaxoVM>)value;
                         } else {
                             second = ConvertToVM((List<dynamic>)value);
@@ -361,11 +382,11 @@ namespace Laser.Orchard.StartupConfig.Services {
                                     TermPart termine_selezionato = taxo_sended_user.Terms.Where(x => x.Id == idtermine).FirstOrDefault();
 
                                     if (theContentItem.As<LocalizationPart>() == null || theContentItem.ContentType == "User") { // se il contenuto non ha localization oppure è user salvo il mastercontent del termine
-                                        var termTranslations = _localizationServices.GetLocalizations(term).Select(x=>x.As<TermPart>()); //get all translations for the term
+                                        var termTranslations = _localizationServices.GetLocalizations(term).Select(x => x.As<TermPart>()); //get all translations for the term
                                         ListTermPartToAdd.Add(term); //adds the original term
                                         ListTermPartToAdd.AddRange(termTranslations); // adds the translations of term
                                     } else { // se il contenuto ha localization e non è user salvo il termine come mi viene passato
-                                            // TODO: testare pertinenza della lingua Contenuto in italianao=>termine in italiano
+                                             // TODO: testare pertinenza della lingua Contenuto in italianao=>termine in italiano
                                         TermPart toAdd = termine_selezionato;
                                         if (ListTermPartToAdd.Contains(toAdd) == false) {
                                             ListTermPartToAdd.Add(toAdd);
@@ -379,13 +400,36 @@ namespace Laser.Orchard.StartupConfig.Services {
                         _taxonomyService.UpdateTerms(theContentItem, ListTermPartToAdd, fieldObj.Name);
                     } else if (tipofield == typeof(LinkField).Name) {
                         LinkVM second = null;
-                        if(value is LinkVM) {
+                        if (value is LinkVM) {
                             second = (LinkVM)value;
                         } else {
                             second = ConvertToLinkVM(value);
                         }
                         RegistraValore(fieldObj, "Value", second.Url);
                         RegistraValore(fieldObj, "Text", second.Text);
+                    } else if (tipofield == "SecureFileField") {
+                        // Using value as dynamic because value is a dynamic ExpandoObject.
+                        // The RegistraValore routine throws an exception otherwise (Object must implement IConvertible).
+                        // I need to check if the ExpandoObject (inheriting IDictionary) contains the property I'm looking for.
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Url"))
+                            RegistraValore(fieldObj, "Url", (value as dynamic).Url);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("AlternateText"))
+                            RegistraValore(fieldObj, "AlternateText", (value as dynamic).AlternateText);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Class"))
+                            RegistraValore(fieldObj, "Class", (value as dynamic).Class);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Style"))
+                            RegistraValore(fieldObj, "Style", (value as dynamic).Style);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Alignment"))
+                            RegistraValore(fieldObj, "Alignment", (value as dynamic).Alignment);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Width"))
+                            RegistraValore(fieldObj, "Width", (value as dynamic).Width);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Height"))
+                            RegistraValore(fieldObj, "Height", (value as dynamic).Height);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Upload"))
+                            RegistraValore(fieldObj, "Upload", (value as dynamic).Upload);
+                        if ((((IDictionary<string, object>)((dynamic)value)).ContainsKey("Base64File")) &&
+                                (((IDictionary<string, object>)((dynamic)value)).ContainsKey("FileName")))
+                            RegistraFile(fieldObj, (value as dynamic).Base64File, (value as dynamic).FileName);
                     } else {
                         RegistraValore(fieldObj, "Value", value);
                     }
@@ -397,6 +441,53 @@ namespace Laser.Orchard.StartupConfig.Services {
                 }
             }
         }
+
+        private void RegistraFile(object obj, string fileContent, string fileName) {
+            var settings = ((ContentField)obj).PartFieldDefinition.Settings;
+            string secureDirectory = settings["SecureFileFieldSettings.SecureDirectoryName"];
+            string generateFileName = settings["SecureFileFieldSettings.GenerateFileName"];
+            string blobAccount = string.Empty;
+            if (settings.ContainsKey("SecureFileFieldSettings.SecureBlobAccountName"))
+                blobAccount = settings["SecureFileFieldSettings.SecureBlobAccountName"];
+            bool guidFileName = false;
+            bool.TryParse(generateFileName, out guidFileName);
+            if (guidFileName) {
+                var extension = Path.GetExtension(fileName);
+                fileName = Guid.NewGuid().ToString("n") + extension;
+            }
+            RegistraValore(obj, "Url", fileName);
+            DateTime upload = DateTime.UtcNow;
+            RegistraValore(obj, "Upload", upload);
+            if (!string.IsNullOrEmpty(blobAccount)) {
+                string secureKey = settings["SecureFileFieldSettings.SecureSharedKey"];
+                string endpoint = settings["SecureFileFieldSettings.SecureBlobEndpoint"];
+                //provider = new SecureAzureBlobStorageProvider(blobAccount, secureKey, endpoint, true, url); 
+            } else {
+                // Test implementation for Scontrino Content Creation.
+                // Folder generation based on settings.
+                string subfolder = string.Empty;
+                string customSubfolder = string.Empty;
+                if (settings.ContainsKey("SecureFileFieldSettings.CustomSubfolder")) {
+                    customSubfolder = settings["SecureFileFieldSettings.CustomSubfolder"];
+                    if (!string.IsNullOrWhiteSpace(customSubfolder)) {
+                        subfolder = _tokenizer.Replace(customSubfolder, new Dictionary<string, object> { { "Content", obj } });
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(subfolder)) {
+                    secureDirectory = Path.Combine(secureDirectory, subfolder);
+                    if (!Directory.Exists(secureDirectory))
+                        Directory.CreateDirectory(secureDirectory);
+                }
+
+                // Now I save the Subfolder property of the field, as I need this information to read the secure file.
+                RegistraValore(obj, "Subfolder", subfolder);
+
+                byte[] bytes = Convert.FromBase64String(fileContent);
+                string filePath = Path.Combine(secureDirectory, fileName);
+                File.WriteAllBytes(filePath, bytes);
+            }
+        }
+
         private void RegistraValoreEnumerator(object obj, string key, object value) {
             ListMode listmode = ((dynamic)obj).PartFieldDefinition.Settings.GetModel<EnumerationFieldSettings>().ListMode;
             if (listmode != ListMode.Listbox && listmode != ListMode.Checkbox) {
@@ -454,7 +545,7 @@ namespace Laser.Orchard.StartupConfig.Services {
         }
         private LinkVM ConvertToLinkVM(dynamic obj) {
             var result = new LinkVM();
-            if(obj != null) {
+            if (obj != null) {
                 result.Url = obj.Value;
                 result.Text = obj.Text;
             }

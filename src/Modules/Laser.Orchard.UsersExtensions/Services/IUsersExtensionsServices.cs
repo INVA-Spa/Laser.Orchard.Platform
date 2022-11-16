@@ -5,6 +5,7 @@ using Laser.Orchard.Policy.Services;
 using Laser.Orchard.Policy.ViewModels;
 using Laser.Orchard.StartupConfig.Models;
 using Laser.Orchard.StartupConfig.Services;
+using Laser.Orchard.StartupConfig.ViewModels;
 using Laser.Orchard.UsersExtensions.Models;
 using Orchard;
 using Orchard.ContentManagement;
@@ -33,7 +34,7 @@ using System.Web.Mvc;
 namespace Laser.Orchard.UsersExtensions.Services {
     public interface IUsersExtensionsServices : IDependency {
         void Register(UserRegistration userRegistrationParams);
-        void SignIn(UserLogin userLoginParams);
+        ResponseType SignIn(UserLogin userLoginParams);
         void SignOut();
         IEnumerable<PolicyTextInfoPart> GetUserLinkedPolicies(string culture = null);
         bool ValidateRegistration(string userName, string email, string password, string confirmPassword, out List<string> errors);
@@ -142,7 +143,8 @@ namespace Laser.Orchard.UsersExtensions.Services {
                         userRegistrationParams.Email,
                         userRegistrationParams.PasswordQuestion,
                         userRegistrationParams.PasswordAnswer,
-                        (RegistrationSettings.UsersAreModerated == false) && (RegistrationSettings.UsersMustValidateEmail == false)
+                        (RegistrationSettings.UsersAreModerated == false) && (RegistrationSettings.UsersMustValidateEmail == false),
+                        false
                         ));
                     // _membershipService.CreateUser may return null and tell nothing about why it failed to create the user
                     // if the Creating user event handlers set the flag to cancel user creation.
@@ -193,15 +195,36 @@ namespace Laser.Orchard.UsersExtensions.Services {
             }
         }
 
-        public void SignIn(UserLogin userLoginParams) {
+        public ResponseType SignIn(UserLogin userLoginParams) {
+            // Sanity check that should never fail because it's already implemented by the calling function.
+            if (string.IsNullOrWhiteSpace(userLoginParams.Username) || string.IsNullOrWhiteSpace(userLoginParams.Password)) {
+                return ResponseType.MissingParameters;
+            }
+
             var user = _membershipService.ValidateUser(userLoginParams.Username, userLoginParams.Password);
             if (user != null) {
                 _userEventHandler.LoggingIn(userLoginParams.Username, userLoginParams.Password);
+
+                // Check if password is expired, if needed.
+                var membershipSettings = _membershipService.GetSettings();
+                if (membershipSettings.EnableCustomPasswordPolicy && membershipSettings.EnablePasswordExpiration) {
+                    if (_membershipService.PasswordIsExpired(user, membershipSettings.PasswordExpirationTimeInDays)) {
+                        //throw new SecurityException(T("The password is expired.").Text);
+                        return ResponseType.ExpiredPassword;
+                    }
+                } 
+                if (user.As<UserPart>().ForcePasswordChange) {
+                    return ResponseType.ExpiredPassword;
+                }
+
                 _authenticationService.SignIn(user, userLoginParams.CreatePersistentCookie);
                 _userEventHandler.LoggedIn(user);
+                return ResponseType.Success;
             }
             else {
-                throw new SecurityException(T("The username or e-mail or password provided is incorrect.").Text);
+                _userEventHandler.LogInFailed(userLoginParams.Username, userLoginParams.Password);
+                return ResponseType.InvalidUser;
+                //throw new SecurityException(T("The username or e-mail or password provided is incorrect.").Text);
             }
         }
 
@@ -277,31 +300,28 @@ namespace Laser.Orchard.UsersExtensions.Services {
 
             errors = new List<string>();
 
-            IDictionary<string, LocalizedString> validationErrors;
+            var context = new AccountValidationContext {
+                UserName = userName,
+                Email = email,
+                Password = password
+            };
 
-            var validate = _accountValidationService.ValidateUserName(userName, out validationErrors);
-            if (!validate) {
-                foreach (var error in validationErrors) {
+            _accountValidationService.ValidateUserName(context);
+            _accountValidationService.ValidateEmail(context);
+            // Don't do the other validations if we already know we failed
+            if (!context.ValidationSuccessful) {
+                foreach (var error in context.ValidationErrors) {
                     errors.Add(string.Format("{0}: {1}", error.Key, error.Value.Text));
                 }
-            }
-
-            validate &= _accountValidationService.ValidateEmail(email, out validationErrors);
-            if (!validate) {
-                foreach (var error in validationErrors) {
-                    errors.Add(string.Format("{0}: {1}", error.Key, error.Value.Text));
-                }
-            }
-
-            if (!validate)
                 return false;
+            }
 
             if (!_userService.VerifyUserUnicity(userName, email)) {
                 errors.Add(T("User with that username and/or email already exists.").Text);
             }
 
-            if (!_accountValidationService.ValidatePassword(password, out validationErrors)) {
-                foreach (var error in validationErrors) {
+            if (!_accountValidationService.ValidatePassword(context)) {
+                foreach (var error in context.ValidationErrors) {
                     errors.Add(string.Format("{0}: {1}", error.Key, error.Value.Text));
                 }
             }

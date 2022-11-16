@@ -57,8 +57,9 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -116,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminMenu.cs" />
+    <Compile Include="Controllers\MessageTranslatorAPIController.cs" />
     <Compile Include="Controllers\TranslatorAPIController.cs" />
     <Compile Include="Controllers\TranslatorController.cs" />
     <Compile Include="Controllers\TranslatorTreeController.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Enum.cs" />
     <Compile Include="Handlers\TranslatorSettingsHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\ContainerMessage.cs" />
     <Compile Include="Models\TranslationFolderSettingsRecord.cs" />
     <Compile Include="Models\TranslationRecord.cs" />
     <Compile Include="Models\TranslatorSettingsPart.cs" />
@@ -131,6 +134,7 @@
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\TranslatorServices.cs" />
     <Compile Include="ViewModels\TranslationDetailViewModel.cs" />
+    <Compile Include="ViewModels\TranslationRecordViewModel.cs" />
     <Compile Include="ViewModels\TranslationTreeNodeViewModel.cs" />
     <Compile Include="ViewModels\TranslationTreeViewModel.cs" />
   </ItemGroup>

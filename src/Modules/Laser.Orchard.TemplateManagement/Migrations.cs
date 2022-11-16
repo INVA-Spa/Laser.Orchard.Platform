@@ -8,7 +8,6 @@ using Orchard.Environment.Extensions;
 using Orchard.Workflows.Models;
 using System.Linq;
 using System.Web.Helpers;
-using System.Web.Script.Serialization;
 
 namespace Laser.Orchard.TemplateManagement {
     [OrchardFeature("Laser.Orchard.TemplateManagement")]
@@ -22,30 +21,49 @@ namespace Laser.Orchard.TemplateManagement {
         }
 
         public int Create() {
-            SchemaBuilder.CreateTable("TemplatePartRecord", table => table
-            .ContentPartRecord()
-            .Column<string>("Title", c => c.WithLength(256))
-            .Column<string>("Subject", c => c.WithLength(256))
-            .Column<string>("Text", c => c.Unlimited())
-            .Column<int>("LayoutIdSelected", c => c.Nullable())
-            .Column<bool>("IsLayout", c => c.NotNull()));
+            SchemaBuilder
+                .CreateTable("TemplatePartRecord", table => table
+                    .ContentPartRecord()
+                    .Column<string>("Title", c => c.WithLength(256))
+                    .Column<string>("Subject", c => c.WithLength(256))
+                    .Column<string>("Text", c => c.Unlimited())
+                    .Column<int>("LayoutIdSelected", c => c.Nullable())
+                    .Column<bool>("IsLayout", c => c.NotNull()));
 
-            SchemaBuilder.CreateTable("SiteSettingsPartRecord", table => table
-            .ContentPartRecord()
-            .Column<string>("DefaultParserIdSelected"));
+            SchemaBuilder
+                .CreateTable("SiteSettingsPartRecord", table => table
+                    .ContentPartRecord()
+                    .Column<string>("DefaultParserIdSelected"));
 
-            ContentDefinitionManager.AlterPartDefinition("TemplatePart", part => part.Attachable());
-            ContentDefinitionManager.AlterTypeDefinition("CustomTemplate", type => type
-            .WithPart("CommonPart", part => part
-            .WithSetting("OwnerEditorSettings.ShowOwnerEditor", "False"))
-            .WithPart("TemplatePart")
-            .WithPart("IdentityPart") // Identity Part for Import Export capability
-            .DisplayedAs("Custom Template")
-            .Draftable()
-            .Creatable());
+            ContentDefinitionManager
+                .AlterPartDefinition("TemplatePart", part => part
+                    .Attachable());
+            ContentDefinitionManager
+                .AlterTypeDefinition("CustomTemplate", type => type
+                    .WithPart("CommonPart", part => part
+                    .WithSetting("OwnerEditorSettings.ShowOwnerEditor", "False"))
+                    .WithPart("TemplatePart")
+                    .WithPart("IdentityPart") // Identity Part for Import Export capability
+                    .DisplayedAs("Custom Template")
+                    .Draftable()
+                    .Creatable()
+                    .Listable());
 
-            // nella prima creazione è inutile fare gli update 1-3, perché creo già Type e Part con i nomi corretti
-            return 4;
+            SchemaBuilder
+                .CreateTable("CustomTemplatePickerPartRecord", table => table
+                    .ContentPartRecord()
+                    .Column<int>("TemplateIdSelected", c => c.Nullable()));
+            ContentDefinitionManager
+                .AlterPartDefinition("CustomTemplatePickerPart", part => part
+                    .Attachable(false));
+
+            ContentDefinitionManager
+                .AlterTypeDefinition("Template", type => type
+                    .Listable(false));
+
+            // UpdateFrom8 is only required if there are SendTemplatedEmail Activities
+            // already configured. That's not the case when first enabling the feature.
+            return 9;
         }
 
         public int UpdateFrom1() {
@@ -88,8 +106,8 @@ namespace Laser.Orchard.TemplateManagement {
 
         public int UpdateFrom4() {
             SchemaBuilder.CreateTable("CustomTemplatePickerPartRecord", table => table
-.ContentPartRecord()
-.Column<int>("TemplateIdSelected", c => c.Nullable()));
+                .ContentPartRecord()
+                .Column<int>("TemplateIdSelected", c => c.Nullable()));
 
             ContentDefinitionManager.AlterPartDefinition("CustomTemplatePickerPart", part => part.Attachable(false));
             return 5;
@@ -108,7 +126,23 @@ namespace Laser.Orchard.TemplateManagement {
             return 8;
         }
         public int UpdateFrom8() {
-            var templates = _contentManager.Query<TemplatePart>().List();
+            // Note that doing Query<TPart>() is terrible because it fetches ALL CONTENT ITEMS
+            // and then filters, in memory, for those that have the Part attached. Adding TRecord
+            // would cause a Join to pre-filter out a bunch of stuff. However, using a TRecord
+            // causes the migration to fail if the schema is changed later (e.g. if we add a
+            // field/column to that record in a later migration).
+            // A different way to fetch fewer content items then is to filter on the content
+            // types that have a TemplatePart.
+
+            // All ContentTypes that contain a TemplatePart are affected by the changes
+            var typeNames = ContentDefinitionManager
+                .ListTypeDefinitions()
+                .Where(ctd => ctd.Parts.Any(ctpd => ctpd.PartDefinition.Name == "TemplatePart"))
+                .Select(ctd => ctd.Name);
+            var templates = _contentManager
+                .Query<TemplatePart>(typeNames.ToArray())
+                .List();
+
             var sendTemplateActivities = _repositoryActivity.Table.Where(x => x.Name == "SendTemplatedEmail").ToList();
 
             foreach (var sendActivity in sendTemplateActivities) {
@@ -126,6 +160,11 @@ namespace Laser.Orchard.TemplateManagement {
             }
 
             return 9;
+        }
+        public int UpdateFrom9() {
+            SchemaBuilder.AlterTable("TemplatePartRecord", t => t.AddColumn<string>("TemplateCode",
+                col => col.WithLength(50)));
+            return 10;
         }
     }
 }

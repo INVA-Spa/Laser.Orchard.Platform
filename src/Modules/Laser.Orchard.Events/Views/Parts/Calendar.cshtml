@@ -2,31 +2,24 @@
 @using Orchard.Projections.Models
 
 @{
-    Style.Include("./Calendar/fullcalendar.css");
+    Style.Require("FullCalendar");
     Script.Require("jQuery");
-    Script.Include("./Calendar/moment.min.js");
-    Script.Include("./Calendar/fullcalendar.min.js");
+    Script.Require("FullCalendar");
+    Script.Require("FullCalendar.Locales");
 
     using (Script.Foot()) {
         <script type="text/javascript">
-        //<![CDATA[
-            $(document).ready(function() {
-                $('#calendar').fullCalendar({
-                    editable: false,
-                    selectable: true,
-                    header: {
-                        left: 'prev,next',
-                        center: 'title',
-                        right: 'month,agendaWeek'
-                    },
-                    defaultView: 'month',
-                    events: '@Url.Action("GetEvents", "Calendar", new { area = "Laser.Orchard.Events", queryId = Model.Calendar.QueryPartRecord.Id })',
-                    timeFormat: '(HH:mm)',
-                    nextDayThreshold: '00:00:00'
+            //<![CDATA[
+            document.addEventListener('DOMContentLoaded', function () {
+                var calendarElement = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarElement, {
+                    initialView: 'dayGridMonth'
                 });
+
+                calendar.render();
             });
-        //]]>
-    </script>
+                //]]>
+        </script>
     }
 }
 

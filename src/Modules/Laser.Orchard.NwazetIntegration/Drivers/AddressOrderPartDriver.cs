@@ -18,6 +18,8 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         private readonly IAuthorizer _authorizer;
         private readonly IAddressConfigurationService _addressConfigurationService;
         private readonly IContentManager _contentManager;
+
+        private bool _justUpdated = false;
         public AddressOrderPartDriver(
             IAuthorizer authorizer,
             IAddressConfigurationService addressConfigurationService,
@@ -56,7 +58,10 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             }
 
             var updatedModel = new OrderAddressEditorViewModel();
-            if (updater.TryUpdateModel(updatedModel, Prefix, null, null)) {
+
+            if (!part.ShippingAddressIsOptional) {
+                updater.TryUpdateModel(updatedModel, Prefix, null, null);
+
                 // shipping
                 // before assigning the viewmodel value to the address I check 
                 // that the city and province values ​​are correct
@@ -68,19 +73,27 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 part.ShippingCityName = updatedModel.ShippingAddressVM.City;
                 part.ShippingProvinceId = updatedModel.ShippingAddressVM.ProvinceId;
                 part.ShippingProvinceName = updatedModel.ShippingAddressVM.Province;
-                // billing
-                // before assigning the viewmodel value to the address I check 
-                // that the city and province values ​​are correct
-                ValidateVM(updatedModel.BillingAddressVM);
-
-                part.BillingCountryId = updatedModel.BillingAddressVM.CountryId;
-                part.BillingCountryName = updatedModel.BillingAddressVM.Country;
-                part.BillingCityId = updatedModel.BillingAddressVM.CityId;
-                part.BillingCityName = updatedModel.BillingAddressVM.City;
-                part.BillingProvinceId = updatedModel.BillingAddressVM.ProvinceId;
-                part.BillingProvinceName = updatedModel.BillingAddressVM.Province;
             }
+            else {
+                updater.TryUpdateModel(updatedModel, Prefix, null, new[] { "ShippingAddressVM" });
+            }
+            _justUpdated = true;
 
+            // billing
+            // before assigning the viewmodel value to the address I check 
+            // that the city and province values ​​are correct
+            ValidateVM(updatedModel.BillingAddressVM);
+
+            part.BillingCountryId = updatedModel.BillingAddressVM.CountryId;
+            part.BillingCountryName = updatedModel.BillingAddressVM.Country;
+            part.BillingCityId = updatedModel.BillingAddressVM.CityId;
+            part.BillingCityName = updatedModel.BillingAddressVM.City;
+            part.BillingProvinceId = updatedModel.BillingAddressVM.ProvinceId;
+            part.BillingProvinceName = updatedModel.BillingAddressVM.Province;
+            part.BillingInvoiceRequest = updatedModel.BillingAddressVM.InvoiceRequest;
+            part.BillingFiscalCode = updatedModel.BillingAddressVM.FiscalCode;
+            part.BillingVATNumber = updatedModel.BillingAddressVM.VATNumber;
+            part.BillingCustomerType = updatedModel.BillingAddressVM.CustomerType;
             return Editor(part, shapeHelper);
         }
 
@@ -128,6 +141,13 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
 
         private OrderAddressEditorViewModel CreateVM(AddressOrderPart part) {
             var orderPart = part.As<OrderPart>();
+            
+            // This workaround is implemented to avoid a exception when displaying backoffice placement for orders.
+            // The following vm creation, while mocking AddressOrderPart records, NREs were triggered trying to access ShippingAddress (which is null) properties.
+            if (orderPart.Id <= 0) {
+                return new OrderAddressEditorViewModel();
+            }
+
             return new OrderAddressEditorViewModel {
                 AddressOrderPart = part,
                 OrderPart = orderPart,
@@ -144,6 +164,11 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             var countryId = part.ShippingCountryId;
             var cityId = part.ShippingCityId;
             var provinceId = part.ShippingProvinceId;
+            string fiscalCode = "";
+            var vatNumber = "";
+            CustomerTypeOptions customerType = CustomerTypeOptions.Undefined;
+            bool invoiceRequest = false;
+
             if (addressType == AddressRecordType.BillingAddress) {
                 address = part.As<OrderPart>().BillingAddress;
                 city = part.BillingCityName;
@@ -152,17 +177,24 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 countryId = part.BillingCountryId;
                 cityId = part.BillingCityId;
                 provinceId = part.BillingProvinceId;
+                fiscalCode = part.BillingFiscalCode;
+                vatNumber = part.BillingVATNumber;
+                invoiceRequest = part.BillingInvoiceRequest;
+                customerType = part.BillingCustomerType;
             }
 
-            // if properties are null, get them from the address that was in OrderPart
-            if (string.IsNullOrWhiteSpace(city)) {
-                city = address.City;
-            }
-            if (string.IsNullOrWhiteSpace(province)) {
-                province = address.Province;
-            }
-            if (string.IsNullOrWhiteSpace(country)) {
-                country = address.Country;
+            //// if properties are null, get them from the address that was in OrderPart
+            //// if the data is updated not be necessary to read values from the OrderPart
+            if (!_justUpdated) {
+                if (string.IsNullOrWhiteSpace(city)) {
+                    city = address.City;
+                }
+                if (string.IsNullOrWhiteSpace(province)) {
+                    province = address.Province;
+                }
+                if (string.IsNullOrWhiteSpace(country)) {
+                    country = address.Country;
+                }
             }
 
             return new AddressRecord {
@@ -179,7 +211,11 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 Country = country,
                 CountryId = countryId,
                 CityId = cityId,
-                ProvinceId = provinceId
+                ProvinceId = provinceId,
+                InvoiceRequest = invoiceRequest,
+                FiscalCode = fiscalCode,
+                VATNumber = vatNumber,
+                CustomerType = customerType
             };
         }
 

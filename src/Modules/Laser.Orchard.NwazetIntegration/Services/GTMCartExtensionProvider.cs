@@ -27,19 +27,26 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         public IEnumerable<dynamic> CartExtensionShapes() {
 
-            var productQuantities = _shoppingCart
-                .GetProducts();
+            if (_GTMProductService.ShoulAddEcommerceTags()) {
+                var productQuantities = _shoppingCart
+                    .GetProducts();
 
-            var gtmObjs = productQuantities
-                .Select(pq => {
-                    var part = pq.Product.As<GTMProductPart>();
-                    _GTMProductService.FillPart(part);
-                    var vm = new GTMProductVM(part);
-                    vm.Quantity = pq.Quantity;
-                    return vm;
-                });
+                var useGA4 = _GTMProductService.UseGA4();
 
-            yield return _shapeFactory.GTMShoppingCart(GTMProducts: gtmObjs);
+                var gtmObjs = productQuantities
+                    // Should we take for granted the fact that a product will always
+                    // have a GTMProductPart?
+                    .Where(pq => pq.Product.Is<GTMProductPart>())
+                    .Select(pq => {
+                        var part = pq.Product.As<GTMProductPart>();
+                        _GTMProductService.FillPart(part);
+                        var vm = _GTMProductService.GetViewModel(part);
+                        vm.Quantity = pq.Quantity;
+                        return vm;
+                    });
+
+                yield return _shapeFactory.GTMShoppingCart(GTMProducts: gtmObjs);
+            }
         }
     }
 }

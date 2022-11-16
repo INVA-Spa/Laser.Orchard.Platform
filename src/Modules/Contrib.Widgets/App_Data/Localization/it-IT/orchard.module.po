@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -57,6 +57,10 @@ msgid "Use hierarchical association"
 msgstr "Utilizzare l'associazione gerarchica"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid " | "
+msgstr "|"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "-- Choose a culture to copy widgets from its version --"
 msgstr "-- Scegliere una Culture dalla cui versione copiare i widget --"
 
@@ -90,7 +94,7 @@ msgstr "Rimuovi"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "Scheduled"
-msgstr "Pianificato"
+msgstr "Programmato"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "Scheduled Archive"
@@ -108,9 +112,29 @@ msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.
 msgid "Widgets"
 msgstr "Widget"
 
+msgctxt "~/Modules/Contrib.Widgets/Views/WidgetsList.cshtml"
+msgid "You are not allowed to add any widget here."
+msgstr "Non sei autorizzato ad aggiungere alcun widget qui."
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Cannot create widget"
+msgstr "Impossibile creare il widget"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Cannot edit widget"
+msgstr "Impossibile modificare il widget"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Couldn't create and publish widget"
+msgstr "Non è possibile creare e pubblicare il widget"
+
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Couldn't create content"
-msgstr "Non è stato possibile creare il contenuto"
+msgstr "Impossibile creare il contenuto"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Couldn't publish widget"
+msgstr "Impossibile pubblicare il widget"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Creating widget failed: {0}"
@@ -130,7 +154,7 @@ msgstr "Non autorizzato alla gestione dei widget"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Removing Widget failed: {0}"
-msgstr "Eliminazione del widget fallita: {0}"
+msgstr "Rimozione del widget non riuscita: {0}"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Widget not found: {0}"
@@ -138,7 +162,11 @@ msgstr "Widget non trovato: {0}"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Widget was successfully deleted"
-msgstr "Il widget è stato eliminato con successo"
+msgstr "Widget eliminato con successo"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "You do not have permission to delete the widget."
+msgstr "Non hai il permesso per eliminare il widget."
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Your {0} has been added."
@@ -146,7 +174,7 @@ msgstr "Il tuo {0} è stato aggiunto."
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Your {0} has been created."
-msgstr "Il {0} è stato creato."
+msgstr "Il tuo {0} è stato creato."
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Your {0} has been saved."
@@ -154,5 +182,9 @@ msgstr "Il tuo {0} è stato salvato."
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Your content has been created."
-msgstr "Il contenuto è stato creato."
+msgstr "Il tuo contenuto è stato creato."
+
+msgctxt "Contrib.Widgets.Drivers.WidgetsContainerPartDriver"
+msgid "You don't have the permissions to remove some of the widgets you attempted to delete."
+msgstr "Non hai il permesso per rimuovere alcuni dei widget che hai cercato di eliminare."
 
