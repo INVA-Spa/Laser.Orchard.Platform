@@ -4,18 +4,23 @@ using Orchard.UI.Resources;
 using Orchard.ContentManagement;
 
 
-namespace Laser.Orchard.Maps {
+namespace Laser.Orchard.Maps
+{
 
-    public class ResourceManifest : IResourceManifestProvider {
+    public class ResourceManifest : IResourceManifestProvider
+    {
         private readonly IOrchardServices _orchardServices;
-        public ResourceManifest(IOrchardServices orchardServices) {
+        public ResourceManifest(IOrchardServices orchardServices)
+        {
             _orchardServices = orchardServices;
         }
 
-        public void BuildManifests(ResourceManifestBuilder builder) {
+        public void BuildManifests(ResourceManifestBuilder builder)
+        {
             var apiKey = "missing-api-key";
             var mapsSettings = _orchardServices.WorkContext.CurrentSite.As<MapsSiteSettingsPart>();
-            if (!string.IsNullOrWhiteSpace(mapsSettings.GoogleApiKey)) {
+            if (!string.IsNullOrWhiteSpace(mapsSettings.GoogleApiKey))
+            {
                 apiKey = mapsSettings.GoogleApiKey;
             }
             bool keepCultureConsistent = mapsSettings.KeepCultureConsistentWithContext;
@@ -25,12 +30,24 @@ namespace Laser.Orchard.Maps {
                 .SetUrl("maps.js");
             // Google Maps
             //Scripts
+            manifest.DefineScript("GoogleMapsApiCallback")
+                .SetUrl("googlemapscallback.js");
+            //manifest.DefineScript("GoogleMapsAPI")
+            //    .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeGoogleMaps")
+            //    .AddAttribute("async", "async")
+            //    .AddAttribute("defer", "defer")
+            //    .SetDependencies("GoogleMapsApiCallback");
             manifest.DefineScript("GoogleMapsAPI")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps);
+                .SetUrl("googlemapsapiloader.js?key=" + apiKey + languageQueryStringForGoogleMaps)
+                .AddAttribute("googlemapsloader", "googlemapsloader");
             manifest.DefineScript("GoogleMapsAPI_callback")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeMap").AddAttribute("async", "async").AddAttribute("defer", "defer");
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeMap")
+                .AddAttribute("async", "async")
+                .AddAttribute("defer", "defer");
             manifest.DefineScript("GoogleMapsAPIMarkerSpiderfier_callback")
-                 .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js?spiderfier_callback=InitializeMap").AddAttribute("async", "async").AddAttribute("defer", "defer");
+                 .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js?spiderfier_callback=InitializeMap")
+                 .AddAttribute("async", "async")
+                 .AddAttribute("defer", "defer");
 
             manifest.DefineScript("GoogleMapsPlacesLib")
                 .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=places");
