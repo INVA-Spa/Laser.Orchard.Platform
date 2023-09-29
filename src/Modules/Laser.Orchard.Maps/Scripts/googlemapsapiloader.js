@@ -25,6 +25,7 @@
                         break;
 
                     case "lang":
+                    case "language":
                         lang = name_value[1];
                         break;
 
