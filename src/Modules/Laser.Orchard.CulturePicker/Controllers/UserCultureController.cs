@@ -32,7 +32,7 @@ namespace Laser.Orchard.CulturePicker.Controllers {
         public IOrchardServices Services { get; set; }
 
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult ChangeCulture(string cultureName) {
+        public ActionResult ChangeCulture(string cultureName, string urlRedirect) {
             // add try catch for identify the error
             // temporary try catch
             try
@@ -51,21 +51,25 @@ namespace Laser.Orchard.CulturePicker.Controllers {
             if (string.IsNullOrEmpty(cultureName)) {
                 return new HttpStatusCodeResult(404);
             }
-            var urlPrefix = Services.WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
-            var requestUrl = Utils.GetReturnUrl(Services.WorkContext.HttpContext.Request, urlPrefix);
-            var requestQuerystring = Services.WorkContext.HttpContext.Request.UrlReferrer.Query;
-            var context = new LocalizableRouteContext(requestUrl, requestQuerystring, cultureName);
-            foreach (var provider in _localizableRouteService.OrderBy(x => x.Priority)) {
-                provider.TryFindLocalizedUrl(context);
+                       
+            if (string.IsNullOrEmpty(urlRedirect)) {
+                var urlPrefix = Services.WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
+                var requestUrl = Utils.GetReturnUrl(Services.WorkContext.HttpContext.Request, urlPrefix);
+                var requestQuerystring = Services.WorkContext.HttpContext.Request.UrlReferrer.Query;
+                var context = new LocalizableRouteContext(requestUrl, requestQuerystring, cultureName);
+                foreach (var provider in _localizableRouteService.OrderBy(x => x.Priority)) {
+                    provider.TryFindLocalizedUrl(context);
+                }
+                urlRedirect = context.RedirectLocalUrl;
             }
-
+            
             // Set the cookie even if a translatedUrl has not been found (for coeherence with the user choice)
-            _cpServices.SaveCultureCookie(cultureName, this.HttpContext);
+            _cpServices.SaveCultureCookie(cultureName, this.HttpContext);            
 
             // add try catch for identify the error
             try
             {
-                return this.RedirectLocal(context.RedirectLocalUrl);
+                return this.RedirectLocal(urlRedirect);
             }
             catch (Exception ex)
             {
