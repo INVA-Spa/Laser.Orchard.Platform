@@ -60,7 +60,15 @@ namespace Laser.Orchard.CulturePicker.Controllers {
                 foreach (var provider in _localizableRouteService.OrderBy(x => x.Priority)) {
                     provider.TryFindLocalizedUrl(context);
                 }
-                urlRedirect = context.RedirectLocalUrl;
+                //controllo se nel cambio lingua sono in un risultato di ricerca, NON considero la QueryString
+                if (QueryStringContainsParameter(requestQuerystring, "url") && QueryStringContainsParameter(requestQuerystring, "rootPath"))
+                {
+                    urlRedirect = String.Format("{0}" + context.UrlLocalized, "~/");
+                }
+                else
+                {
+                    urlRedirect = context.RedirectLocalUrl;
+                }
             }
             
             // Set the cookie even if a translatedUrl has not been found (for coeherence with the user choice)
@@ -78,5 +86,12 @@ namespace Laser.Orchard.CulturePicker.Controllers {
             }
         }
 
+        private bool QueryStringContainsParameter(string querystring, string parameter)
+        {
+            var queryParams = HttpUtility.ParseQueryString(querystring);
+            return queryParams[parameter] != null;
+        }
+
     }
+
 }
