@@ -115,7 +115,16 @@
     <Content Include="BootstrapItalia\src\js\plugins\cookiebar.js" />
     <Content Include="BootstrapItalia\src\js\plugins\custom-select.js" />
     <Content Include="BootstrapItalia\src\js\plugins\datepicker\datepicker.js" />
+    <Content Include="BootstrapItalia\src\js\plugins\datepicker\locales\de.js" />
+    <Content Include="BootstrapItalia\src\js\plugins\datepicker\locales\de.min.js" />
+    <Content Include="BootstrapItalia\src\js\plugins\datepicker\locales\en.js" />
+    <Content Include="BootstrapItalia\src\js\plugins\datepicker\locales\en.min.js" />
+    <Content Include="BootstrapItalia\src\js\plugins\datepicker\locales\fr.js" />
+    <Content Include="BootstrapItalia\src\js\plugins\datepicker\locales\fr.min.js" />
     <Content Include="BootstrapItalia\src\js\plugins\datepicker\locales\it.js" />
+    <Content Include="BootstrapItalia\src\js\plugins\datepicker\locales\it.min.js" />
+    <Content Include="BootstrapItalia\src\js\plugins\datepicker\locales\ru.js" />
+    <Content Include="BootstrapItalia\src\js\plugins\datepicker\locales\ru.min.js" />
     <Content Include="BootstrapItalia\src\js\plugins\dimmer.js" />
     <Content Include="BootstrapItalia\src\js\plugins\dropdown.js" />
     <Content Include="BootstrapItalia\src\js\plugins\fonts-loader.js" />

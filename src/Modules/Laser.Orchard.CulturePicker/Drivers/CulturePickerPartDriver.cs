@@ -6,27 +6,32 @@ using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Configuration;
 using Orchard.Localization.Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Laser.Orchard.CulturePicker.Drivers {
+namespace Laser.Orchard.CulturePicker.Drivers
+{
 
     public class CulturePickerPartDriver : ContentPartDriver<CulturePickerPart> {
         private readonly ICultureManager _cultureManager;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ICulturePickerSettingsService _extendedCultureService;
         private readonly ILocalizableContentService _localizableContentService;
+        private IEnumerable<ILocalizableRouteService2> _localizableRouteService;
 
         public CulturePickerPartDriver(
             ICultureManager cultureManager,
             IWorkContextAccessor workContextAccessor,
             ICulturePickerSettingsService extendedCultureService,
-            ILocalizableContentService localizableContentService) {
+            ILocalizableContentService localizableContentService,
+            IEnumerable<ILocalizableRouteService2> localizableRouteService) {
 
             _cultureManager = cultureManager;
             _workContextAccessor = workContextAccessor;
             _extendedCultureService = extendedCultureService;
             _localizableContentService = localizableContentService;
+            _localizableRouteService = localizableRouteService;
         }
 
         protected override DriverResult Display(CulturePickerPart part, string displayType, dynamic shapeHelper) {
@@ -129,6 +134,22 @@ namespace Laser.Orchard.CulturePicker.Drivers {
             part.UserCulture = _extendedCultureService
                 .GetExtendedCulture(_cultureManager.GetCurrentCulture(_workContextAccessor.GetContext().HttpContext));
 
+            part.UserCulture = _extendedCultureService.GetExtendedCulture(_cultureManager.GetCurrentCulture(_workContextAccessor.GetContext().HttpContext));
+            //NOTA: gdessimone 4/5/21 è stata aggiunta la hashtable TranslatedUrls con le URL tradotte nelle varie lingue in modo da metterle 
+            //direttamente nei link del cambio lingua (il meccanismo continua ad essere gestito da una action ma almeno il link compare per i crawler)
+            part.TranslatedUrls = new System.Collections.Hashtable();
+            foreach (var item in part.AvailableCultures) {
+                var localUrl = context.HttpContext.Request.Url.AbsolutePath;
+                var ct = new LocalizableRouteContext((localUrl.StartsWith("/") ? localUrl.Substring(1) : localUrl), context.HttpContext.Request.QueryString.ToString(), item.CultureCode);
+                if (item.CultureCode == context.CurrentCulture && !part.TranslatedUrls.ContainsKey(item.CultureCode))
+                    part.TranslatedUrls.Add(item.CultureCode, ct.UrlToLocalize);
+                else
+                    foreach (var provider in _localizableRouteService.OrderBy(x => x.Priority))
+                        if (provider.TryFindLocalizedUrl(ct, ct.UrlToLocalize) && !part.TranslatedUrls.ContainsKey(item.CultureCode))
+                            part.TranslatedUrls.Add(item.CultureCode, ct.UrlLocalized);
+
+            }
+            
             return ContentShape("Parts_CulturePicker", 
                 () => shapeHelper.Parts_CulturePicker(
                     AvailableCultures: part.AvailableCultures,

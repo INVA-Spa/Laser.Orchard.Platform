@@ -36,6 +36,13 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineScript("jQueryUI_DatePicker_ru").SetUrl("jquery.ui.datepicker-ru.js").SetDependencies("jQuery", "jQueryUI_DatePicker");
             manifest.DefineScript("jQuery_NestedModels").SetUrl("custom/jquery.nestedmodels.js").SetDependencies("jQuery");
 
+            manifest.DefineScript("Boostrap_DatePicker_it").SetUrl("../Bootstrapitalia/src/js/plugins/datepicker/locales/it.min.js");
+            manifest.DefineScript("Boostrap_DatePicker_fr").SetUrl("../Bootstrapitalia/src/js/plugins/datepicker/locales/fr.min.js");
+            manifest.DefineScript("Boostrap_DatePicker_en").SetUrl("../Bootstrapitalia/src/js/plugins/datepicker/locales/en.min.js");
+            manifest.DefineScript("Boostrap_DatePicker_de").SetUrl("../Bootstrapitalia/src/js/plugins/datepicker/locales/de.min.js");
+            manifest.DefineScript("Boostrap_DatePicker_es").SetUrl("../Bootstrapitalia/src/js/plugins/datepicker/locales/es.min.js");
+            manifest.DefineScript("Boostrap_DatePicker_ru").SetUrl("../Bootstrapitalia/src/js/plugins/datepicker/locales/ru.min.js");
+
             manifest.DefineScript("Jssor_Core").SetUrl("Jssor/jssor.core.js").SetDependencies("jQuery");
             manifest.DefineScript("Jssor_Slider").SetUrl("Jssor/jssor.slider.js").SetDependencies("jQuery");
             manifest.DefineScript("Jssor_Utils").SetUrl("Jssor/jssor.utils.js").SetDependencies("jQuery");
