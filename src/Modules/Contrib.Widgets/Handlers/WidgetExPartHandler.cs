@@ -5,6 +5,7 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Aspects;
 using Orchard.ContentManagement.Handlers;
 using Orchard.ContentManagement.MetaData;
+using Orchard.Core.Common.Models;
 using Orchard.Core.Contents.Settings;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
@@ -80,8 +81,22 @@ namespace Contrib.Widgets.Handlers {
 
                 }
             }
-            // Then we publish the widget
-            _contentManager.Publish(part.ContentItem);
+
+
+            bool isDraft = true;
+            try
+            {
+                var publishedUtc = Convert.ToDateTime(part.ContentItem.As<CommonPart>().PublishedUtc);
+                var latestItem = _contentManager.Get(part.ContentItem.Id, VersionOptions.Latest);
+                var publishedItem = _contentManager.Get(part.ContentItem.Id, VersionOptions.Published);
+                isDraft = latestItem != null && (publishedItem == null || latestItem.Id != publishedItem.Id);
+            }
+            catch {
+            }
+            //Non si pubblica sempre, ma solo se il widget non è in bozza altrimenti col salva si pubblica subito anche senza volerlo
+            if (!isDraft)
+                // Then we publish the widget
+                _contentManager.Publish(part.ContentItem);
 
         }
 
