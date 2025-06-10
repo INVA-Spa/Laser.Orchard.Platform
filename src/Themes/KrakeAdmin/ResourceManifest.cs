@@ -7,6 +7,7 @@ namespace KrakeAdmin {
         public const string KrakeAdmin = "KrakeAdmin";
         public const string KrakeNavigation = "KrakeNavigation";
         public const string Bootstrap = "Bootstrap";
+        public const string Popper = "Popper";
         public const string Site = "Site";
         public const string TooltipImagezoom = "TooltipsZoomimage";
 

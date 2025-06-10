@@ -57,35 +57,48 @@
 
 @if (Model.CurrentUser != null) {
     @*<div id="login">@T("User:") @Html.ItemDisplayText((Orchard.ContentManagement.IContent)Model.CurrentUser) | @Html.ActionLink(T("Logout").ToString(), "LogOff", new { Area = "Orchard.Users", Controller = "Account", ReturnUrl = Href("~/") })</div>*@
-    <div class="headerbar-right">
-        <!--ul class="header-nav header-nav-options">
-            <li>
-                <form class="navbar-search" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="headerSearch" placeholder="Enter your keyword">
-                    </div>
-                    <button type="submit" class="btn btn-icon-toggle ink-reaction"><i class="fa fa-search"></i></button>
-                </form>
-            </li>
-        </ul-->
-        <ul class="header-nav header-nav-profile">
-            <li class="dropdown">
-                <a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
-                    <img src="@folderStylePath/Images/avatar1.png?1403934956" alt="" />
-                    <span class="profile-info">
-                        @Html.ItemDisplayText((Orchard.ContentManagement.IContent)Model.CurrentUser)
-                        <small>@T("User")</small>
-                    </span>
-                </a>
-                <ul class="dropdown-menu animation-dock">
-                    <li><i class="fa fa-fw fa-key text-warning"></i>@Html.ActionLink(T("Change Password").ToString(), "ChangePassword", new { Area = "Orchard.Users", Controller = "Account" })</li>
-                    <li><i class="fa fa-fw fa-power-off text-danger"></i>@Html.ActionLink(T("Logout").ToString(), "LogOff", new { Area = "Orchard.Users", Controller = "Account", ReturnUrl = Href("~/") })</li>
-                </ul>
-                <!--end .dropdown-menu -->
-            </li>
-            <!--end .dropdown -->
-        </ul>
-        <!--end .header-nav-profile -->
-    </div>
+<div class="headerbar-right">
+    <!--ul class="header-nav header-nav-options">
+        <li>
+            <form class="navbar-search" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="headerSearch" placeholder="Enter your keyword">
+                </div>
+                <button type="submit" class="btn btn-icon-toggle ink-reaction"><i class="fa fa-search"></i></button>
+            </form>
+        </li>
+    </ul-->
+    <ul class="header-nav header-nav-profile">
+        <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle ink-reaction" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="@folderStylePath/Images/avatar1.png?1403934956" alt="" class="rounded-circle" style="width: 32px; height: 32px;" />
+                <span class="profile-info">
+                    @Html.ItemDisplayText((Orchard.ContentManagement.IContent)Model.CurrentUser)
+                    <small>@T("User")</small>
+                </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end animation-dock">
+                <li>
+                    @Html.ActionLink(
+                        @T("Change Password").ToString(),
+                        "ChangePassword",
+                        new { Area = "Orchard.Users", Controller = "Account" },
+                        new { @class = "dropdown-item" }
+                    )
+                </li>
+                <li>
+                    @Html.ActionLink(
+                        @T("Logout").ToString(),
+                        "LogOff",
+                        new { Area = "Orchard.Users", Controller = "Account", ReturnUrl = Href("~/") },
+                        new { @class = "dropdown-item" }
+                    )
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <!--end .header-nav-profile -->
+</div>
 
 }
