@@ -1774,7 +1774,9 @@ a:hover, a:active, a:focus {
 
 .info-box-content {
   padding: 5px 10px;
-  margin-left: 90px; }
+  margin-left: 90px; 
+      display: flex;
+    flex-wrap: wrap;}
 
 .info-box-number {
   display: block;
