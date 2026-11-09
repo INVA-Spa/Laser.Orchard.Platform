@@ -22,6 +22,11 @@ namespace Laser.Orchard.CulturePicker.Services {
         private readonly ICulturePickerSettingsService _culturePickerSettingsService;
         private readonly IAliasService _aliasService;
 
+        // Per-request memoization (the service lives in the request scope): the culture picker asks
+        // the same questions once per available culture, and the answers cannot change within a request.
+        private readonly Dictionary<string, AutoroutePart> _routeByUrl = new Dictionary<string, AutoroutePart>(StringComparer.Ordinal);
+        private readonly Dictionary<int, IList<LocalizationPart>> _publishedLocalizationsById = new Dictionary<int, IList<LocalizationPart>>();
+
 
         public LocalizableContentService(
             ILocalizationService localizationService, 
@@ -44,6 +49,25 @@ namespace Laser.Orchard.CulturePicker.Services {
         #region ILocalizableContentService Members
 
         public bool TryGetRouteForUrl(string url, out AutoroutePart route) {
+            var key = string.IsNullOrWhiteSpace(url) ? string.Empty : url;
+            if (!_routeByUrl.TryGetValue(key, out route)) {
+                route = FindRouteForUrl(url);
+                _routeByUrl[key] = route;
+            }
+            return route != null;
+        }
+
+        private IEnumerable<LocalizationPart> GetPublishedLocalizations(IContent content) {
+            IList<LocalizationPart> localizations;
+            if (!_publishedLocalizationsById.TryGetValue(content.Id, out localizations)) {
+                localizations = _localizationService.GetLocalizations(content, VersionOptions.Published).ToList();
+                _publishedLocalizationsById[content.Id] = localizations;
+            }
+            return localizations;
+        }
+
+        private AutoroutePart FindRouteForUrl(string url) {
+            AutoroutePart route;
             if (string.IsNullOrWhiteSpace(url)) { //look for homepage
                 var routeValues = _aliasService.Get(string.Empty);
                 var homeCI = _contentManager.Get(int.Parse(routeValues["Id"].ToString()));
@@ -58,7 +82,7 @@ namespace Laser.Orchard.CulturePicker.Services {
                     .FirstOrDefault();
             }
 
-            return route != null;
+            return route;
         }
 
 
@@ -71,7 +95,7 @@ namespace Laser.Orchard.CulturePicker.Services {
             }
 
             //var siteCulture = _cultureManager.GetCultureByName(_cultureManager.GetSiteCulture());
-            var localizations = _localizationService.GetLocalizations(routableContent, VersionOptions.Published);
+            var localizations = GetPublishedLocalizations(routableContent);
 
             ILocalizableAspect localizationPart = null, siteCultureLocalizationPart = null;
             foreach (var l in localizations) {
@@ -115,7 +139,7 @@ namespace Laser.Orchard.CulturePicker.Services {
                 TryGetRouteForUrl(url, out currentRoutePart);
                 if (currentRoutePart != null && currentRoutePart.As<LocalizationPart>() != null) {
                     try {
-                        var localizations = _localizationService.GetLocalizations(currentRoutePart, VersionOptions.Published);
+                        var localizations = GetPublishedLocalizations(currentRoutePart);
                         cultureList = _culturePickerSettingsService
                           .CultureList(localizations.Select(loc => (loc.Culture == null) ? "" : loc.Culture.Culture))
                           .Where(cl => cl.CultureCode.ToString(CultureInfo.InvariantCulture) != "").Distinct().ToList();

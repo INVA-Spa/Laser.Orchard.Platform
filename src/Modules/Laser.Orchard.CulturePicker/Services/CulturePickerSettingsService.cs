@@ -1,40 +1,56 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Orchard.ContentManagement;
 using Laser.Orchard.CulturePicker.Models;
+using Orchard.Caching;
 using Orchard.Data;
 using Orchard.Localization.Services;
 using Orchard;
+using Orchard.Services;
 
 namespace Laser.Orchard.CulturePicker.Services {
     public class CulturePickerSettingsService : ICulturePickerSettingsService {
+        private const string ExtendedCulturesCacheKey = "Laser.Orchard.CulturePicker.ExtendedCultures";
+        private const string ExtendedCulturesChangedSignal = "Laser.Orchard.CulturePicker.ExtendedCulturesChanged";
+        // the cache is per node: the expiry bounds how long the other nodes keep a stale list after a change
+        private static readonly TimeSpan ExtendedCulturesCacheDuration = TimeSpan.FromMinutes(5);
+
         private readonly IContentManager _contentManager;
         private readonly ICultureManager _cultureManager;
         private readonly IWorkContextAccessor _work;
         private readonly ILocalizationService _localizationService;
         private readonly IRepository<ExtendedCultureRecord> _extendedCultureRepository;
         private readonly IRepository<SettingsRecord> _settingsRepository;
+        private readonly ICacheManager _cacheManager;
+        private readonly ISignals _signals;
+        private readonly IClock _clock;
 
 
-        public CulturePickerSettingsService(ILocalizationService localizationService, ICultureManager cultureManager, IContentManager contentManager, IRepository<ExtendedCultureRecord> repository, IWorkContextAccessor work, IRepository<Models.SettingsRecord> settingsRepository) {
+        public CulturePickerSettingsService(ILocalizationService localizationService, ICultureManager cultureManager, IContentManager contentManager, IRepository<ExtendedCultureRecord> repository, IWorkContextAccessor work, IRepository<Models.SettingsRecord> settingsRepository,
+            ICacheManager cacheManager, ISignals signals, IClock clock) {
             _localizationService = localizationService;
             _cultureManager = cultureManager;
             _contentManager = contentManager;
             _extendedCultureRepository = repository;
             _settingsRepository = settingsRepository;
             _work = work;
+            _cacheManager = cacheManager;
+            _signals = signals;
+            _clock = clock;
         }
 
         public CulturePicker.Models.SettingsModel ReadSettings() {
-            var settingsRecord = _settingsRepository.Table.Count();
-            if (settingsRecord == 0) {
-                var newSettings = new CulturePicker.Models.SettingsRecord();
-                newSettings.ShowOnlyPertinentCultures = false;
-                _settingsRepository.Create(newSettings);
-                newSettings = null;
+            var settingsRecord = _settingsRepository.Table.FirstOrDefault();
+            if (settingsRecord == null) {
+                // use the new record directly: on read requests the session is flushed only at commit,
+                // so a query here would not see it yet
+                settingsRecord = new CulturePicker.Models.SettingsRecord();
+                settingsRecord.ShowOnlyPertinentCultures = false;
+                _settingsRepository.Create(settingsRecord);
             }
             var settings = new Models.SettingsModel();
-            settings.Settings = _settingsRepository.Table.Single();
+            settings.Settings = settingsRecord;
             settings.ExtendedCulturesList = this.CultureList(null, true);
             return settings;
         }
@@ -47,7 +63,6 @@ namespace Laser.Orchard.CulturePicker.Services {
         }
 
         public IList<ExtendedCultureRecord> CultureList(IEnumerable<string> cultureListSource = null, bool ordered = true) {
-            _extendedCultureRepository.Flush();
             List<string> listCultures;
             if (cultureListSource == null)
                 listCultures = _cultureManager.ListCultures().ToList();
@@ -55,7 +70,7 @@ namespace Laser.Orchard.CulturePicker.Services {
                 listCultures = cultureListSource.ToList();
             }
             var siteCulture = _cultureManager.GetSiteCulture();
-            var listExtendedCultures = _extendedCultureRepository.Table.ToList();
+            var listExtendedCultures = GetExtendedCultureRows();
             var joinedCultures = from c in listCultures
                                  join
                                      ec in listExtendedCultures on c.ToString() equals ec.CultureCode into temp_ec
@@ -84,13 +99,36 @@ namespace Laser.Orchard.CulturePicker.Services {
                 //record.Priority = culture.Priority;
                 _extendedCultureRepository.Create(culture);
             }
+            _signals.Trigger(ExtendedCulturesChangedSignal);
 
             record = null;
         }
 
         public ExtendedCultureRecord GetExtendedCulture(string culture) {
-            var record = _extendedCultureRepository.Get(o => o.CultureCode.Equals(culture));
-            return record;
+            // the former SQL query compared with the database collation (case-insensitive)
+            var row = GetExtendedCultureRows().FirstOrDefault(o => string.Equals(o.CultureCode, culture, StringComparison.OrdinalIgnoreCase));
+            return row == null ? null : Copy(row);
+        }
+
+        /// <summary>
+        /// Extended culture records of the tenant, cached. The cached objects are never handed out:
+        /// callers get copies, so changing them does not alter the cache.
+        /// </summary>
+        private IList<ExtendedCultureRecord> GetExtendedCultureRows() {
+            return _cacheManager.Get(ExtendedCulturesCacheKey, true, ctx => {
+                ctx.Monitor(_signals.When(ExtendedCulturesChangedSignal));
+                ctx.Monitor(_clock.When(ExtendedCulturesCacheDuration));
+                return _extendedCultureRepository.Table.ToList().Select(Copy).ToList();
+            });
+        }
+
+        private static ExtendedCultureRecord Copy(ExtendedCultureRecord source) {
+            return new ExtendedCultureRecord {
+                Id = source.Id,
+                CultureCode = source.CultureCode,
+                DisplayName = source.DisplayName,
+                Priority = source.Priority
+            };
         }
     }
 }

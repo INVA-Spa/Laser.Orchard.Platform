@@ -134,7 +134,6 @@ namespace Laser.Orchard.CulturePicker.Drivers
             part.UserCulture = _extendedCultureService
                 .GetExtendedCulture(_cultureManager.GetCurrentCulture(_workContextAccessor.GetContext().HttpContext));
 
-            part.UserCulture = _extendedCultureService.GetExtendedCulture(_cultureManager.GetCurrentCulture(_workContextAccessor.GetContext().HttpContext));
             //NOTA: gdessimone 4/5/21 è stata aggiunta la hashtable TranslatedUrls con le URL tradotte nelle varie lingue in modo da metterle 
             //direttamente nei link del cambio lingua (il meccanismo continua ad essere gestito da una action ma almeno il link compare per i crawler)
             part.TranslatedUrls = new System.Collections.Hashtable();
